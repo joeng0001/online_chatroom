@@ -8,23 +8,23 @@ module.exports = io => {
         //socket.on('user',async ()=>{
         //    io.emit('user',await user.user(socket)) //socket used for sending error
         //});
-        socket.on('user_online', (user) => {
-            //try{
-            user.online = true;
-            user_control.update_user(user, socket);
-            io.emit('user_online', user) //socket used for sending error
-            //}catch(e){
-            //    socket.emit('error',e)
-            //}
+        socket.on('user_online', (data) => {
+            try {
+                data.online = true;
+                user_control.update_user(data, socket);
+                io.emit('user_online', data) //socket used for sending error
+            } catch (e) {
+                socket.emit('error', e)
+            }
         });
-        socket.on('user_offline', (user) => {
-            //try{
-            user.online = false;
-            user_control.update_user(user, socket);
-            io.emit('user_offline', user) //socket used for sending error
-            //}catch(e){
-            //socket.emit('error',e)
-            //}
+        socket.on('user_offline', (data) => {
+            try {
+                data.online = false;
+                user_control.update_user(data, socket);
+                io.emit('user_offline', data) //socket used for sending error
+            } catch (e) {
+                socket.emit('error', e)
+            }
         });
     })
 };

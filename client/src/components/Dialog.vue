@@ -2,7 +2,11 @@
     <div class="margintop">
         <v-row justify="center">
             <v-dialog v-model="dialog">
-                <v-card>
+                <v-card v-if="room_action == 'Editing'">
+                    <v-pagination v-model="page" :length="2" circle>
+                    </v-pagination>
+                </v-card>
+                <v-card v-if="page == 1">
                     <v-card-title>
                         <span class="text-h5">{{ room_action?room_action: "New" }}</span>
                     </v-card-title>
@@ -48,12 +52,19 @@
                         </v-btn>
                     </v-card-actions>
                 </v-card>
+                <v-card v-if="page == 2">
+                    <div>
+                        this is chat records page
+                    </div>
+                    <ChatRecord />
+                </v-card>
             </v-dialog>
         </v-row>
     </div>
 </template>
 <script>
 import DataService from "../services/DataService.js"
+import ChatRecord from "./chat_record.vue"
 export default {
     data() {
         return {
@@ -67,8 +78,12 @@ export default {
                 remark: null,
                 active_status: 'true',
             },
-            room_action: null
+            room_action: null,
+            page: 1
         };
+    },
+    components: {
+        ChatRecord
     },
     //props: ['action', 'room_info'],
     created() {
@@ -107,6 +122,11 @@ export default {
             if (action === 'New')
                 delete this.new_room.id;//let the id auto increment
             this.dialog = true;
+        },
+
+        open_dialog_chat_record() {
+            this.dialog = true;
+            this.page = 2;
         },
         Save() {
             this.dialog = false;

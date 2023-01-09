@@ -48,7 +48,7 @@ router.beforeEach((to, from, next) => {
   console.log(from)
   console.log(to.path === "/")
   console.log(vuex_store.state.loginStatus)
-  if (to.path === "/") {//going to login
+  if (to.path === "/" || to.path === "/registration") {//going to login
     next();
     return;
   } else

@@ -32,7 +32,7 @@
           <td :style="borderStyle">{{ room.id }}</td>
           <td :style="borderStyle">{{ room.room_name }}</td>
           <td :style="borderStyle">{{ room.welcome_msg }}</td>
-          <td :style="borderStyle">
+          <td :style="borderStyle" class="inline">
             <v-btn @click="Open_dialog('Editing', room)">
               <v-icon>
                 mdi-plus
@@ -43,6 +43,13 @@
                 mdi-trash-can-outline
               </v-icon>
             </v-btn>
+            <v-btn @click="Open_dialog_chat_record()">
+              <v-icon>
+                mdi-comment
+              </v-icon>
+            </v-btn>
+            <v-switch @change="save_active_status(room)" v-model="room.active_status" label="active" color="success"
+              hide-details></v-switch>
           </td>
         </tr>
       </tbody>
@@ -63,7 +70,7 @@ export default {
       dialog_action: "",
       room_prototype: {
         id: "",
-        room_name: "tt",
+        room_name: "",
         welcome_msg: "",
         room_admin: "",
         remark: "",
@@ -86,22 +93,17 @@ export default {
       console.log("get_chat_room_list being call")
       DataService.get_room_list()
         .then(res => {
-          console.log("res is")
-          console.log(res)
-          this.room_lists = res.data
-          console.log(this.room_lists)
+          this.room_lists = res.data;
         })
         .catch(e => {
           console.log(e);
         });
     },
     Open_dialog(action, room) {
-      //this.dialog_action = action
-      //console.log(room)
-      //this.target_room = { ...room };
-      //console.log(this.target_room.id)
-      //console.log("target_room is ", this.target_room);
       this.$refs.vc.open_dialog(action, action === 'New' ? this.room_prototype : room);//this will active the dialog by changing "dialog" to true in dialog component 
+    },
+    Open_dialog_chat_record() {
+      this.$refs.vc.open_dialog_chat_record();
     },
     Deleting(id) {
       console.log("receive id", id)
@@ -135,6 +137,17 @@ export default {
         .catch(e => {
           console.log(e);
         });
+    },
+    save_active_status(room) {
+      console.log("updating")
+      console.log(room)
+      DataService.edit_chatroom(room)
+        .then((res) => {
+          console.log("update success")
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   }
 }
@@ -155,7 +168,12 @@ export default {
   margin-top: 15px;
 }
 
+
 .btn {
   border-radius: 10%;
+}
+
+.inline {
+  display: flex;
 }
 </style>

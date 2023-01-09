@@ -10,8 +10,17 @@ class DataService {
     console.log(data)
     return http.post("/chat_record", data);
   }
+  delete_chat_record(data) {
+    return http.put("/chat_record_deletion", data);
+  }
   findall_user() {
     return http.get("/user");
+  }
+  delete_user(data) {
+    return http.post("/user", data);
+  }
+  edit_user(data) {
+    return http.post("/user_edition", data);
   }
   get_room_list() {
     return http.get("/chat_room");

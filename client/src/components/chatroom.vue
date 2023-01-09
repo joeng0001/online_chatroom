@@ -1,5 +1,5 @@
 <template>
-  <Room_list class="room_list" />
+  <Home class="room_list" />
   <v-container class="container">
     <v-row v-for="message in messages" :key="message.id">
       <v-col>
@@ -34,7 +34,7 @@
 
 <script>
 import DataService from "../services/DataService.js"
-import Room_list from "./homePage.vue"
+import Home from "./homePage.vue"
 export default {
   data() {
     return {
@@ -45,11 +45,11 @@ export default {
     };
   },
   components: {
-    Room_list
+    Home
   },
   created() {
     this.room_id = this.$route.query.room_id;
-    this.get_chat_record();
+    this.get_chat_record(this.room_id);
     this.socket = this.$store.socket;
 
   },
@@ -60,16 +60,28 @@ export default {
       }
     })
   },
+  watch: {
+    '$route.query.room_id': {
+      handler(newValue, oldValue) {
+        this.room_id = newValue;
+        console.log("new room id is ", this.room_id)
+        this.get_chat_record(this.room_id);
+      },
+      deep: true
+    }
+  },
   methods: {
-    get_chat_record() {
-      console.log("getting message")
+    get_chat_record(id) {
+      console.log("getting message with id", id)
       var data = {
-        room_id: this.room_id,
+        room_id: id,
       };
       DataService.get_chat_record(data)
         .then(res => {
           //this.messages = res.data.map(i => i.content)
           this.messages = res.data;
+
+          console.log(this.messages)
         })
         .catch(e => {
           console.log(e);
@@ -111,17 +123,5 @@ export default {
   padding-left: 0px;
   display: block;
   position: absolute;
-}
-
-.mdi-instagram {
-  background: radial-gradient(circle at 30% 107%,
-      #fdf497 0%,
-      #fdf497 5%,
-      #fd5949 45%,
-      #d6249f 60%,
-      #285aeb 90%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 </style>

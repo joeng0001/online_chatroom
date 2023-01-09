@@ -60,7 +60,15 @@ export default {
           console.log(this.$store.state.token)
           console.log(this.$store.state.userID)
         }).then(() => {
-          //this.$router.push("/chatroom");
+          var data = {
+            id: this.$store.state.userID,
+            online: true,
+          }
+          console.log(data)
+          this.$store.socket.emit('user_online', data);
+          this.$store.socket.on('error', (err) => {
+            console.log(err);
+          })
         })
         .catch(e => {
           console.log(e.message);

@@ -33,6 +33,11 @@
 export default {
   methods: {
     logout() {
+      var data = {
+        id: this.$store.state.userID,
+        online: false,
+      }
+      this.$store.socket.emit('user_offline', data);
       console.log("logging out");
       this.$store.socket.close();
       this.$store.dispatch('setToken', null);

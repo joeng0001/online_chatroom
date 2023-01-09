@@ -3,8 +3,8 @@
   <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   <div id="app">
     <chat_header />
-    <router-view/> 
-    
+    <router-view />
+
   </div>
 </template>
 
@@ -16,7 +16,20 @@ export default {
   components: {
     //HelloWorld
     chat_header
-  }
+  },
+  created() {
+    window.addEventListener("beforeunload", this.leaving);
+  },
+  methods: {
+    leaving() {
+      var data = {
+        id: this.$store.state.userID,
+        online: false,
+      }
+      this.$store.socket.emit('user_offline', data);
+      this.$store.close();
+    },
+  },
 }
 </script>
 
