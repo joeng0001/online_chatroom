@@ -51,6 +51,8 @@ export default {
                 .catch(e => {
                     console.log(e.message);
                     console.log("register fail")
+                    alert(e.message);
+                    alert("register fail");
                 });
         },
         toggle_pw_view() {

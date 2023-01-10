@@ -54,7 +54,7 @@
         </tr>
       </tbody>
     </v-table>
-  </v-app> -->
+  </v-app>
 </template> 
 
 <script>

@@ -10,22 +10,23 @@ exports.create_user = async (req, res) => {
             name: req.body.name
         }
     })
-        .then(() => {
-            console.log(req.body)
-        })
         .then(async (match) => { //if user found,the account have been used
             if (match) {
                 throw "account already in use"
+            } else {
+                console.log("before create,this is body\n", req.body)
+                const new_user = {
+                    name: req.body.name,
+                    password: req.body.password,
+                    online: true,
+                    active_status: true,
+                    curr_online_account: 0
+                }
+                await user.create(new_user)
+                    .then(() => {
+                        res.send({ message: "ok" })
+                    })
             }
-            console.log("before create,this is body\n", req.body)
-            const new_user = {
-                name: req.body.name,
-                password: req.body.password
-            }
-            await user.create(new_user)
-                .then(() => {
-                    res.send({ message: "ok" })
-                })
         })
         .catch(err => {
             console.log(err)

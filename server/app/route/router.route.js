@@ -10,6 +10,7 @@ module.exports = app => {
   router.post("/chat_record", chat_record.create_chat_record);
   router.get("/user", user.findall_user);
   router.post("/user", user.delete_user);
+  router.put("/user", user.user_offline)
   router.post("/user_edition", user.edit_user);
   router.get("/chat_room", chat_room.get_room_list);
   router.post("/login", login_service.login)
@@ -17,5 +18,9 @@ module.exports = app => {
   router.post("/chat_room_creation", chat_room.create_chatroom)
   router.post("/chat_room_edition", chat_room.edit_chatroom)
   router.put("/chat_room", chat_room.remove_chatroom)
+
+
+
+  //router.put("/test_create", chat_room.test_create)
   app.use('/', router);
 };

@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import DataService from "../services/DataService.js"
 export default {
   methods: {
     logout() {
@@ -39,6 +40,13 @@ export default {
       }
       this.$store.socket.emit('user_offline', data);
       console.log("logging out");
+      DataService.user_offline({ id: this.$store.state.userID })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(e => {
+          console.log(e.message);
+        });
       this.$store.socket.close();
       this.$store.dispatch('setToken', null);
       this.$store.dispatch('setUser', null);

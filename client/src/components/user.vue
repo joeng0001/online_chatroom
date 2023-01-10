@@ -169,6 +169,9 @@ export default {
             this.dialog = false;
             this.description = "";
           })
+          .catch(e => {
+            console.log(e);
+          });
       }
 
     },

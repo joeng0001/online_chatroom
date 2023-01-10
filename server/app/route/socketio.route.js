@@ -5,9 +5,6 @@ module.exports = io => {
         socket.on('message', (msg) => {
             io.emit('message', msg)
         });
-        //socket.on('user',async ()=>{
-        //    io.emit('user',await user.user(socket)) //socket used for sending error
-        //});
         socket.on('user_online', (data) => {
             try {
                 data.online = true;
@@ -17,14 +14,6 @@ module.exports = io => {
                 socket.emit('error', e)
             }
         });
-        socket.on('user_offline', (data) => {
-            try {
-                data.online = false;
-                user_control.update_user(data, socket);
-                io.emit('user_offline', data) //socket used for sending error
-            } catch (e) {
-                socket.emit('error', e)
-            }
-        });
     })
+
 };

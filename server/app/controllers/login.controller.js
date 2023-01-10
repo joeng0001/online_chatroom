@@ -18,12 +18,18 @@ exports.login = async (req, res) => {
   })
     .then(async (target_user) => {
       const valid = await target_user.comparePassword(req.body.password)
-      console.log(valid)
       if (!valid) {
         console.log("throwing error in the server side ")
         throw "password not correct"
       }
-      console.log("after valid")
+      await user.update({ curr_online_account: target_user.curr_online_account + 1 }, {
+        where: {
+          id: target_user.id
+        }
+      })
+      return target_user
+    })
+    .then((target_user) => {
       res.send({
         user_id: target_user.dataValues.id,
         user_name: target_user.dataValues.name,

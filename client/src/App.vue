@@ -11,6 +11,7 @@
 <script>
 //import HelloWorld from './components/HelloWorld.vue'
 import chat_header from '@/components/header.vue'
+import DataService from "./services/DataService.js"
 export default {
   name: 'App',
   components: {
@@ -22,11 +23,16 @@ export default {
   },
   methods: {
     leaving() {
-      var data = {
-        id: this.$store.state.userID,
-        online: false,
+      if (!this.$store.state.loginStatus) {//if he already log out,ignore this operation
+        return
       }
-      this.$store.socket.emit('user_offline', data);
+      DataService.user_offline({ id: this.$store.state.userID })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(e => {
+          console.log(e.message);
+        });
       this.$store.close();
     },
   },

@@ -40,6 +40,14 @@ class DataService {
   remove_chatroom(data) {
     return http.put("/chat_room", data)
   }
+  user_offline(data) {
+    return http.put("/user", data)
+  }
+
+
+  // test_create(data) {
+  //   return http.put("test_create", data)
+  // }
 }
 
 export default new DataService();
