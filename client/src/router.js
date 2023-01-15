@@ -1,10 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Login_page from '@/components/login' //the entry page 
-import chatroom from '@/components/chatroom' //just for testing 
-import user from '@/components/user'  //view the user of the chat room
-import room_list from '@/components/room_list' //view all the chating room
-import registration from '@/components/registration' //view all the chating room
-import Home from '@/components/homePage' //view all the chating room
+import Login_page from '@/components/Login' //the entry page 
+import chatroom from '@/components/ChatRoom' //just for testing 
+import user from '@/components/User'  //view the user of the chat room
+import room_list from '@/components/RoomList' //view all the chating room
+import registration from '@/components/Registration' //view all the chating room
+import Home from '@/components/HomePage' //view all the chating room
 import vuex_store from "./store.js"
 const routes = [
   {
@@ -48,12 +48,17 @@ router.beforeEach((to, from, next) => {
   console.log(from)
   console.log(to.path === "/")
   console.log(vuex_store.state.loginStatus)
-  if (to.path === "/" || to.path === "/registration") {//going to login
-    next();
-    return;
-  } else
-    if (!vuex_store.state.loginStatus) {//if not login,force to login page
-      router.push("/")
+  const banned_list = ['/user', '/room_list']
+
+  if (to.path === "/" || to.path === "/registration") {
+    if (vuex_store.state.loginStatus) {
+      router.push("/home")
+      return;
+    }
+  }
+  else
+    if (vuex_store.state.userID !== 1 && banned_list.includes(to.path)) {//if not admin,then some path not allow
+      router.push("/home")
       return;
     }
   next();

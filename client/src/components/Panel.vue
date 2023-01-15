@@ -1,26 +1,53 @@
 <template>
-    <div class="white elevation-2">
-      <v-toolbar flat dense class="cyan" dark>
-        <v-toolbar-title>{{title}}</v-toolbar-title>
-        <slot name="action" />
-      </v-toolbar>
-  
-      <div class="pl-4 pr-4 pt-2 pb-2">
-        <slot>
-          No slot content defined.
-        </slot>
-      </div>
+  <div class="box">
+    <v-toolbar class="toolbar">
+      <v-toolbar-title>{{ title }}</v-toolbar-title>
+    </v-toolbar>
+
+    <div>
+      <slot>
+        No slot content defined.
+      </slot>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    props: [
-      'title'
-    ]
-  }
-  </script>
-  
-  <style scoped>
-  </style>
-  
+  </div>
+</template>
+
+<script>
+//container for login/register
+export default {
+  props: [
+    'title'
+  ]
+}
+</script>
+
+<style scoped>
+.box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  padding: 40px;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 255, 0.5);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+}
+
+
+.toolbar {
+  background-color: rgba(100, 100, 100, 0.5);
+  border-radius: 10px;
+}
+
+.toolbar:hover {
+  background-color: rgba(200, 200, 200, 0.7);
+  border-radius: 5px;
+  padding: 0px;
+  margin: 0px 10px 0px 10px;
+  box-shadow: 0 0 100px #ade2e6,
+    0 0 100px #ade2e6,
+    0 0 100px #ade2e6,
+    0 0 100px #ade2e6;
+}
+</style>

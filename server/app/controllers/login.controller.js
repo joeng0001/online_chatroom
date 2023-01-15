@@ -13,7 +13,8 @@ function jwtSignUser(user) {
 exports.login = async (req, res) => {
   await user.findOne({
     where: {
-      name: req.body.name
+      name: req.body.name,
+      active_status: true
     }
   })
     .then(async (target_user) => {
@@ -22,7 +23,7 @@ exports.login = async (req, res) => {
         console.log("throwing error in the server side ")
         throw "password not correct"
       }
-      await user.update({ curr_online_account: target_user.curr_online_account + 1 }, {
+      await user.update({ curr_online_account: target_user.curr_online_account + 1, online: true }, {
         where: {
           id: target_user.id
         }
@@ -44,3 +45,32 @@ exports.login = async (req, res) => {
       });
     });
 };
+
+exports.add_online_account = async (req, res) => {
+  await user.findOne({
+    where: {
+      id: req.body.id,
+      active_status: true
+    }
+  })
+    .then(async (target_user) => {
+      console.log(target_user)
+      await user.update({ curr_online_account: target_user.curr_online_account + 1, online: true }, {
+        where: {
+          id: target_user.id
+        }
+      })
+    })
+    .then(() => {
+      console.log("update success")
+      res.send({
+        message: "success"
+      });
+    })
+    .catch(err => {
+      console.log(err)
+      res.sendStatus(500, {
+        message: err
+      });
+    });
+}

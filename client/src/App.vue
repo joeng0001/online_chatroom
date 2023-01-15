@@ -10,13 +10,30 @@
 
 <script>
 //import HelloWorld from './components/HelloWorld.vue'
-import chat_header from '@/components/header.vue'
+import chat_header from '@/components/Header.vue'
 import DataService from "./services/DataService.js"
+import { io } from "socket.io-client";
 export default {
   name: 'App',
   components: {
     //HelloWorld
     chat_header
+  },
+  beforeCreate() {
+    this.$store.dispatch('setToken', localStorage.getItem('token'))
+    this.$store.dispatch('setUserID', parseInt(localStorage.getItem('userID')))//get string,parse to int
+    this.$store.dispatch('setLoginStatus', localStorage.getItem('status') == 'true')//get string,pass to bool
+    this.$store.socket = io("http://10.0.2.15:8089")
+    const data = {
+      id: this.$store.state.userID
+    }
+    DataService.add_online_account(data)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(e => {
+        console.log(e.message);
+      });
   },
   created() {
     window.addEventListener("beforeunload", this.leaving);
@@ -33,7 +50,7 @@ export default {
         .catch(e => {
           console.log(e.message);
         });
-      this.$store.close();
+      this.$store.socket.close();
     },
   },
 }

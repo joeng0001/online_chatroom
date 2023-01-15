@@ -56,7 +56,7 @@
                     <div>
                         this is chat records page
                     </div>
-                    <ChatRecord />
+                    <ChatRecord :RoomID="chat_record_room_id" />
                 </v-card>
             </v-dialog>
         </v-row>
@@ -64,7 +64,7 @@
 </template>
 <script>
 import DataService from "../services/DataService.js"
-import ChatRecord from "./chat_record.vue"
+import ChatRecord from "./ChatRecord.vue"
 export default {
     data() {
         return {
@@ -79,7 +79,8 @@ export default {
                 active_status: 'true',
             },
             room_action: null,
-            page: 1
+            page: 1,
+            chat_record_room_id: 1
         };
     },
     components: {
@@ -106,6 +107,7 @@ export default {
     },
     methods: {
         findall_user() {
+            //get all user info
             DataService.findall_user()
                 .then((all_user) => {
                     this.user_list = all_user.data.map((item) => {
@@ -117,6 +119,7 @@ export default {
 
         },
         open_dialog(action, room_info) {
+            //open the dialog ,call by parent component
             this.new_room = { ...room_info }
             this.room_action = action
             if (action === 'New')
@@ -124,11 +127,14 @@ export default {
             this.dialog = true;
         },
 
-        open_dialog_chat_record() {
+        open_dialog_chat_record(id) {
+            //directly open the dialog in chat record page ->page 2
+            this.chat_record_room_id = id
             this.dialog = true;
             this.page = 2;
         },
         Save() {
+            //update the chat room info
             this.dialog = false;
             console.log(this.new_room);
             (this.room_action === "New" ? DataService.create_chatroom(this.new_room) : DataService.edit_chatroom(this.new_room))
