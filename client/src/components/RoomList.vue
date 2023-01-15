@@ -158,9 +158,6 @@ export default {
   padding-left: 100px;
 }
 
-.top {
-  padding-top: 200px;
-}
 
 .margintop {
   margin-top: 15px;
