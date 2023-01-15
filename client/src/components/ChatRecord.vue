@@ -180,24 +180,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .left {
     text-align: left;
     width: 100%;
     padding-left: 100px;
 }
 
-.top {
-    padding-top: 200px;
-}
 
-.margintop {
-    margin-top: 15px;
-}
-
-.btn {
-    border-radius: 10%;
-}
 
 .border_style {
     border: 1px solid lightgreen;

@@ -151,7 +151,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .left {
   text-align: left;
   width: 100%;

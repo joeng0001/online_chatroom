@@ -68,8 +68,4 @@ export default {
 .light:hover {
   color: #E9E;
 }
-
-.width {
-  width: 200px
-}
 </style>

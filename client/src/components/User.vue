@@ -209,7 +209,7 @@ export default {
 }
 </script >
 
-<style>
+<style scoped>
 .border_style {
   border: 1px solid lightblue;
 }
