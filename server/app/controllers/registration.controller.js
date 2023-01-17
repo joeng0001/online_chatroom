@@ -2,8 +2,6 @@ const db = require("../models");
 const user = db.user;
 
 exports.create_user = async (req, res) => {
-    //console.log("socket is ")
-    console.log("register receive user ", req.body)
     //find duplicate
     await user.findOne({
         where: {
@@ -14,7 +12,6 @@ exports.create_user = async (req, res) => {
             if (match) {
                 throw "account already in use"
             } else {
-                console.log("before create,this is body\n", req.body)
                 const new_user = {
                     name: req.body.name,
                     password: req.body.password,
@@ -29,7 +26,6 @@ exports.create_user = async (req, res) => {
             }
         })
         .catch(err => {
-            console.log(err)
             res.sendStatus(500, {
                 message: err
             });

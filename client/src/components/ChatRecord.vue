@@ -20,7 +20,7 @@
                 <th>
                     Content
                 </th>
-                <th><!--if it's admin,show this./...To be done.../-->
+                <th>
                     Edit
                 </th>
 
@@ -80,15 +80,12 @@ export default {
                 const res = this.room_lists.find((room) => {
                     return room.id === id
                 });
-
-                console.log("in find by id with", target_list, res);
                 return res === undefined ? "not found" : res.room_name;
             }
             if (target_list === 'Publisher') {
                 const res = this.user_lists.find((user) => {
                     return user.id === id
                 });
-                console.log("in find by id with", target_list, res);
                 return res === undefined ? "not found" : res.name;
             }
         },
@@ -99,38 +96,30 @@ export default {
                     this.user_lists = res.data;
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.log(err.message)
                 })
         },
         get_chat_room_list() {
             //get all room info
-            console.log("get_chat_room_list being call")
             DataService.get_room_list()
                 .then(res => {
-                    console.log("res is")
-                    console.log(res)
                     this.room_lists = res.data
-                    console.log(this.room_lists)
                 })
                 .catch(e => {
-                    console.log(e);
+                    console.log(e.message);
                 });
         },
         get_chat_record() {
             //get all chat record
-            console.log("get_chat_room_list being call")
             var data = {
                 room_id: this.RoomID,
             };
             DataService.get_chat_record(data)
                 .then(res => {
-                    console.log("chat_record")
-                    console.log(res)
                     this.chat_records = res.data
-                    console.log("chat_record is", this.chat_records)
                 })
                 .catch(e => {
-                    console.log(e);
+                    console.log(e.message);
                 });
         },
         Deleting(id) {
@@ -143,8 +132,7 @@ export default {
             };
             DataService.delete_chat_record(data)
                 .then(res => {
-                    console.log(res)
-                    console.log("delete successful")
+                    console.log(res.message)
                 })
                 .then(() => {
                     this.chat_records = this.chat_records.filter((chat) => {
@@ -152,29 +140,9 @@ export default {
                     })
                 })
                 .catch(e => {
-                    console.log(e);
+                    console.log(e.message);
                 });
 
-        },
-        create_chatroom() {
-            //new a chat room
-            console.log("create chat room")
-            let data = {
-                room_name: "third room",
-                room_admin: "admin",
-                active_status: 1,
-                welcome_msg: "yoyoyo"
-            }
-            DataService.create_chatroom(data)
-                .then(res => {
-                    console.log(res)
-                })
-                .then(() => {
-                    this.get_chat_room_list();
-                })
-                .catch(e => {
-                    console.log(e);
-                });
         }
     }
 }

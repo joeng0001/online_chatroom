@@ -98,7 +98,6 @@ export default {
   methods: {
     get_chat_room_list() {
       //get room info
-      console.log("get_chat_room_list being call")
       DataService.get_room_list()
         .then(res => {
           this.room_list = res.data;
@@ -107,7 +106,7 @@ export default {
           this.curr_display_room_list = this.room_list.slice(0, 10);
         })
         .catch(e => {
-          console.log(e);
+          console.log(e.message);
         });
     },
     Open_dialog(action, room) {
@@ -123,7 +122,6 @@ export default {
       if (!confirm("delete the chatroom?")) {
         return
       }
-      console.log("receive id", id)
       DataService.remove_chatroom({ room_id: id })
         .then(res => {
           console.log(res)
@@ -132,19 +130,17 @@ export default {
           this.get_chat_room_list();
         })
         .catch(e => {
-          console.log(e);
+          console.log(e.message);
         });
 
     },
     save_active_status(room) {
-      console.log("updating")
-      console.log(room)
       DataService.edit_chatroom(room)
         .then((res) => {
           console.log("update success")
         })
         .catch(e => {
-          console.log(e);
+          console.log(e.message);
         });
     }
   }

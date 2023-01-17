@@ -47,22 +47,17 @@ export default {
       //login,init all the param
       DataService.login({ name: this.username, password: this.password })
         .then(res => {
-          console.log(res.data)
           this.$store.dispatch('setToken', res.data.token)
           this.$store.dispatch('setUserID', res.data.user_id)
           this.$store.dispatch('setLoginStatus', true)
           this.$store.socket = io("http://10.0.2.15:8089")
           this.$router.push("/home");
-          console.log("you are in")
-          console.log(this.$store.state.token)
-          console.log(this.$store.state.userID)
         }).then(() => {
           var data = {
             id: this.$store.state.userID,
             online: true,
             jwt: this.$store.state.toekn
           }
-          console.log(data)
           this.$store.socket.emit('user_online', data);
           this.$store.socket.on('error', (err) => {
             console.log(err);

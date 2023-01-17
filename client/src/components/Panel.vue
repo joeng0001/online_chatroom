@@ -6,7 +6,7 @@
 
     <div>
       <slot>
-        No slot content defined.
+        No Centent Defined
       </slot>
     </div>
   </div>

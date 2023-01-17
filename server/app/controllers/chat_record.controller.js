@@ -37,7 +37,7 @@ exports.create_chat_record = async (req, res) => {
   await Chat_record.create(req.body)
     .then(() => {
       //io.emit({message:"you got the socket message"})
-      res.send({ message: "ok" })
+      res.send({ message: "success" })
     })
     .catch(err => {
       res.status(500).send({
@@ -51,7 +51,7 @@ exports.delete_chat_record = async (req, res) => {
     where: { id: req.body.id },
   })
     .then(() => {
-      res.send({ message: "chat record successfully delete" });
+      res.send({ message: "Chat record successfully delete" });
     })
     .catch(err => {
       res.status(500).send({

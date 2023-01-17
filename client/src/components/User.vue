@@ -155,7 +155,7 @@ export default {
       }
       DataService.delete_user(data)
         .then((res) => {
-          console.log(res)
+          console.log(res.message)
         })
         .then(() => {
           this.users_list = this.users_list.filter((user) => {
@@ -163,12 +163,11 @@ export default {
           })
         })
         .catch(e => {
-          console.log(e);
+          console.log(e.message);
         });
     },
     Add_descrition(user) {
       //edit the descrition of a user
-      console.log("editing")
       this.descrition = user.descrition;
       this.dialog = true
       this.dialog_user = user
@@ -177,7 +176,7 @@ export default {
       //save the toggled the active status
       DataService.edit_user(user)
         .then((res) => {
-          console.log("update success")
+          console.log(res.message)
         })
     },
     Submit() {
@@ -186,7 +185,7 @@ export default {
         this.dialog_user.description = this.description;
         DataService.edit_user(this.dialog_user)
           .then((res) => {
-            console.log("update success")
+            console.log(res.message)
           })
           .then(() => {
             this.dialog_user = null;
@@ -194,7 +193,7 @@ export default {
             this.description = "";
           })
           .catch(e => {
-            console.log(e);
+            console.log(e.message);
           });
       }
 
@@ -210,6 +209,12 @@ export default {
 </script >
 
 <style scoped>
+.left {
+  text-align: left;
+  width: 100%;
+  padding-left: 100px;
+}
+
 .border_style {
   border: 1px solid lightblue;
 }

@@ -46,14 +46,11 @@ export default {
             };
             DataService.get_room_list(data)
                 .then(res => {
-                    //this.messages = res.data.map(i => i.content)
-                    console.log("after getting the room list")
-                    console.log(res.data);
                     this.room_list = res.data;
                     this.curr_display_room_list = this.room_list.slice(0, 5);
                 })
                 .catch(e => {
-                    console.log(e);
+                    console.log(e.message);
                 });
         },
     }

@@ -44,10 +44,6 @@ const router = createRouter({
   routes,
 });
 router.beforeEach((to, from, next) => {
-  console.log(to)
-  console.log(from)
-  console.log(to.path === "/")
-  console.log(vuex_store.state.loginStatus)
   const banned_list = ['/user', '/room_list']
 
   if (to.path === "/" || to.path === "/registration") {

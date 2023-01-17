@@ -12,9 +12,6 @@
     </v-toolbar-items>
 
     <v-toolbar-items style="padding-left:200px;">
-      <!-- <v-btn color="blue" :to="{ name: 'chatroom' }">
-        online chat room
-      </v-btn> -->
       <v-btn :to="{ name: 'user' }" class="light" v-if="$store.state.loginStatus && $store.state.userID === 1">
         user_list
       </v-btn>
@@ -45,7 +42,7 @@ export default {
       console.log("logging out");
       DataService.user_offline({ id: this.$store.state.userID })
         .then(res => {
-          console.log(res)
+          console.log(res.message)
         })
         .catch(e => {
           console.log(e.message);

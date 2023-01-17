@@ -41,13 +41,11 @@ export default {
             //call register method
             DataService.Register({ name: this.username, password: this.password })
                 .then(res => {
-                    console.log("register success")
                     this.$router.push({ path: '/' })
-                    console.log("you are in")
+                    console.log(res.message)
                 })
                 .catch(e => {
                     console.log(e.message);
-                    console.log("register fail")
                     alert(e.message, "user name already in use");
                 });
         },

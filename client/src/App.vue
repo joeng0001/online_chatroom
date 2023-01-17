@@ -29,7 +29,7 @@ export default {
     }
     DataService.add_online_account(data)
       .then(res => {
-        console.log(res)
+        console.log(res.message)
       })
       .catch(e => {
         console.log(e.message);
@@ -45,7 +45,7 @@ export default {
       }
       DataService.user_offline({ id: this.$store.state.userID })
         .then(res => {
-          console.log(res)
+          console.log(res.message)
         })
         .catch(e => {
           console.log(e.message);

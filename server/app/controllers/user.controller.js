@@ -18,16 +18,14 @@ exports.findall_user = async (req, res) => {
 
 }
 
-exports.update_user = async (user) => {
-    //console.log("socket is ")
-    //console.log(socket)
+exports.update_user = async (user, socket) => {
     await db_user.update({ online: user.online }, {
         where: {
             id: user.id
         }
     })
         .catch(err => {
-            console.log("error in update user")
+            socket.emit('err', err)
         });
 
 }
@@ -41,7 +39,6 @@ exports.edit_user = async (req, res) => {
             res.send({ message: "success" })
         })
         .catch(err => {
-            update
             res.status(500).send({
                 message: err
             });
@@ -86,7 +83,6 @@ exports.user_offline = async (req, res) => {
                         id: target_user.id
                     }
                 })
-                console.log("emiting offline message", target_user)
                 io_obj.io.emit("user_offline", target_user)
             }
         })

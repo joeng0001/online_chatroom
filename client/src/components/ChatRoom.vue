@@ -85,11 +85,9 @@ export default {
   methods: {
     find_by_id(id) {
       //get user name by it's id
-      console.log("calling dind by id with ", id)
       const res = this.user_lists.find((user) => {
         return user.id === id
       });
-      console.log("find res", res)
       return res === undefined ? "anonymous" : res.name;
     }
     ,
@@ -100,24 +98,20 @@ export default {
           this.user_lists = res.data;
         })
         .catch((err) => {
-          console.log(err)
+          console.log(err.message)
         })
     },
     get_chat_record(id) {
       //get chat record by room id
-      console.log("getting message with id", id)
       var data = {
         room_id: id,
       };
       DataService.get_chat_record(data)
         .then(res => {
-          //this.messages = res.data.map(i => i.content)
           this.messages = res.data;
-
-          console.log(this.messages)
         })
         .catch(e => {
-          console.log(e);
+          console.log(e.message);
         });
     },
     send_chat() {
@@ -129,13 +123,13 @@ export default {
       };
       DataService.add_chat_record(data)//add the msg to db,
         .then(res => {
-          data.type = "new_chat"  //specify the type in socket but not dataService
+          data.type = "new_chat"  //specify the type for socket but not dataService
           this.socket.emit('message', data);//then send it again to server and server
           //will then boardcast the msg to all client
           this.chat = "";
         })
         .catch(e => {
-          console.log(e);
+          console.log(e.message);
         });
     }
   }

@@ -113,8 +113,6 @@ export default {
                     this.user_list = all_user.data.map((item) => {
                         return item.name;
                     });
-
-                    console.log(this.user_list)
                 })
 
         },
@@ -139,9 +137,11 @@ export default {
             console.log(this.new_room);
             (this.room_action === "New" ? DataService.create_chatroom(this.new_room) : DataService.edit_chatroom(this.new_room))
                 .then((res) => {
-                    console.log("save finished")
-                    console.log(res)
+                    console.log(res.message)
                     this.$emit('get_room_info');
+                })
+                .catch((e) => {
+                    console.log(e.message)
                 })
         }
     }
