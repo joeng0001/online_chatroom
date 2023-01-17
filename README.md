@@ -10,7 +10,7 @@ npm run serve
 
 #server(backend)
 go to server folder
-node serger.js
+node server.js
 
 #database
 go to server/app/config
