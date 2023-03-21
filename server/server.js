@@ -20,6 +20,12 @@ db.sequelize.sync();
 require("./app/route/router.route.js")(app);
 require("./app/route/socketio.route.js")(io);
 
+
+app.use(express.static('../client/dist'));
+app.get('/', (req, res) => {
+  res.sendFile('../client/dist/index.html');
+});
+
 const PORT = 8089;
 http.listen(PORT, () => {
   console.log(`server running at ${PORT}`);
