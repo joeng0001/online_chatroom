@@ -41,7 +41,7 @@ export default {
 }
 
 .toolbar:hover {
-  background-color: rgba(200, 200, 200, 0.7);
+  background-color: rgba(200, 200, 200, 0.2);
   border-radius: 5px;
   padding: 0px;
   margin: 0px 10px 0px 10px;

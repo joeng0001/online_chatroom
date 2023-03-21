@@ -8,14 +8,13 @@
                 </v-card>
                 <v-card v-if="page == 1">
                     <v-card-title>
-                        <span class="text-h5">{{ room_action?room_action: "New" }}</span>
+                        <span class="text-h5">{{ room_action ? room_action : "New" }}</span>
                     </v-card-title>
                     <v-card-text>
                         <v-container>
                             <v-row>
                                 <v-col cols="10" sm="6" md="5">
-                                    <v-text-field label="Room Name" required
-                                        v-model="new_room.room_name"></v-text-field>
+                                    <v-text-field label="Room Name" required v-model="new_room.room_name"></v-text-field>
                                 </v-col>
                                 <v-col cols="10" sm="6" md="5">
                                     <v-text-field label="Welcome message" hint="Message that will show to all"
@@ -33,11 +32,6 @@
                                         hint="true for active,false for deactive" required
                                         v-model="new_room.active_status"></v-select>
                                 </v-col>
-                                <!-- <v-col cols="10" sm="5">
-                                    <v-autocomplete
-                                        :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                                        label="Interests" multiple></v-autocomplete>
-                                </v-col>  -->
                             </v-row>
                         </v-container>
                         <small>required field</small>
@@ -53,9 +47,6 @@
                     </v-card-actions>
                 </v-card>
                 <v-card v-if="page == 2">
-                    <div>
-                        this is chat records page
-                    </div>
                     <ChatRecord :RoomID="chat_record_room_id" />
                 </v-card>
             </v-dialog>
@@ -134,7 +125,6 @@ export default {
         Save() {
             //update the chat room info
             this.dialog = false;
-            console.log(this.new_room);
             (this.room_action === "New" ? DataService.create_chatroom(this.new_room) : DataService.edit_chatroom(this.new_room))
                 .then((res) => {
                     console.log(res.message)

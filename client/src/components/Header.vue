@@ -12,10 +12,12 @@
     </v-toolbar-items>
 
     <v-toolbar-items style="padding-left:200px;">
-      <v-btn :to="{ name: 'user' }" class="light" v-if="$store.state.loginStatus && $store.state.userID === 1">
+      <!-- <v-btn :to="{ name: 'user' }" class="light" v-if="$store.state.loginStatus && $store.state.userID === 1"> -->
+      <v-btn :to="{ name: 'user' }" class="light" v-if="$store.state.loginStatus">
         user_list
       </v-btn>
-      <v-btn :to="{ name: 'room_list' }" class="light" v-if="$store.state.loginStatus && $store.state.userID === 1">
+      <!-- <v-btn :to="{ name: 'room_list' }" class="light" v-if="$store.state.loginStatus && $store.state.userID === 1"> -->
+      <v-btn :to="{ name: 'room_list' }" class="light" v-if="$store.state.loginStatus">
         room_list
       </v-btn>
       <v-spacer></v-spacer>

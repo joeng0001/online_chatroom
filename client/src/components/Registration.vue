@@ -81,7 +81,7 @@ export default {
     transition: all 0.3s ease;
     transition-timing-function: linear;
     background-color: rgba(15, 185, 241, 0.7);
-    padding: 5px 20px 25px 20px;
-    font-size: 25px;
+    padding: 5px 10px 15px 10px;
+    font-size: 20px;
 }
 </style>

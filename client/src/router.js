@@ -52,11 +52,11 @@ router.beforeEach((to, from, next) => {
       return;
     }
   }
-  else
-    if (vuex_store.state.userID !== 1 && banned_list.includes(to.path)) {//if not admin,then some path not allow
-      router.push("/home")
-      return;
-    }
+  /*for admin checking*/
+  // else if (vuex_store.state.userID !== 1 && banned_list.includes(to.path)) {//if not admin,then some path not allow
+  //     router.push("/home")
+  //     return;
+  //   }
   next();
 });
 export default router;
