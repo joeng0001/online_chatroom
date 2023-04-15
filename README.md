@@ -1,11 +1,13 @@
-# online_chatroom
-require
+#Require
 1.node js
 2.mysql
 
-#under /server
+#Start
 node server.js
 
-#database
+#Config Database
 go to server/app/config
 edit db.config.js
+
+#Initiation
+might need register,login and create chatroom at initiation
