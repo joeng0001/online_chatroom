@@ -1,8 +1,9 @@
 # online_chatroom
 require
-1.node js installed
-2.mysql installed
+1.node js
+2.mysql
 
+#under /server
 node server.js
 
 #database
