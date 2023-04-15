@@ -160,9 +160,6 @@ export default {
 }
 
 
-.btn {
-  border-radius: 10%;
-}
 
 .inline {
   display: flex;

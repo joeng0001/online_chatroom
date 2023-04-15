@@ -71,7 +71,6 @@ export default {
 
 .btn {
     padding: 5px;
-    border-radius: 10px;
     background-color: rgba(188, 188, 188, 0.7);
     text-align: center;
     justify-content: center;
@@ -81,7 +80,5 @@ export default {
     transition: all 0.3s ease;
     transition-timing-function: linear;
     background-color: rgba(15, 185, 241, 0.7);
-    padding: 5px 10px 15px 10px;
-    font-size: 20px;
 }
 </style>

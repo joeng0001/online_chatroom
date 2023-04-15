@@ -41,13 +41,12 @@ export default {
 }
 
 .toolbar:hover {
-  background-color: rgba(200, 200, 200, 0.2);
-  border-radius: 5px;
+  background-color: rgba(200, 200, 200, 0.4);
   padding: 0px;
   margin: 0px 10px 0px 10px;
-  box-shadow: 0 0 100px #ade2e6,
-    0 0 100px #ade2e6,
-    0 0 100px #ade2e6,
-    0 0 100px #ade2e6;
+  box-shadow: 0 0 10px #6da3a7,
+    0 0 10px #ade2e6,
+    0 0 10px #ade2e6,
+    0 0 10px #ade2e6;
 }
 </style>

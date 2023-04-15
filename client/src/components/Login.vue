@@ -13,6 +13,7 @@
     <v-btn class="btn" @click="login">
       Login
     </v-btn>
+    &nbsp;
     <v-btn class="btn" @click="to_register">
       Registration
     </v-btn>
@@ -50,7 +51,7 @@ export default {
           this.$store.dispatch('setToken', res.data.token)
           this.$store.dispatch('setUserID', res.data.user_id)
           this.$store.dispatch('setLoginStatus', true)
-          this.$store.socket = io("http://10.0.2.15:8089")
+          this.$store.socket = io("http://localhost:8089")
           this.$router.push("/home");
         }).then(() => {
           var data = {
@@ -105,7 +106,5 @@ export default {
   transition: all 0.3s ease;
   transition-timing-function: linear;
   background-color: rgba(119, 221, 119, 0.7);
-  padding: 5px 10px 15px 10px;
-  font-size: 20px;
 }
 </style>
