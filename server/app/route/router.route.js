@@ -12,8 +12,9 @@ module.exports = app => {
     if (!jwt.verify(req.body.jwt, jwt_config.jwtSecret)) {
       res.send({ message: "jwt verification failed" })
       return
-    } else
+    } else {
       next()
+    }
   }
   var router = require("express").Router();
   router.put("/chat_record", jwt_verify, chat_record.get_chat_record);
@@ -24,7 +25,7 @@ module.exports = app => {
   router.put("/user", jwt_verify, user.user_offline)
   router.put("/login", jwt_verify, login_service.add_online_account)
   router.post("/user_edition", jwt_verify, user.edit_user);
-  router.get("/chat_room", chat_room.get_room_list);
+  router.post("/chat_room", jwt_verify, chat_room.get_room_list);
   router.post("/login", login_service.login)
   router.post("/register", register.create_user)
   router.post("/chat_room_creation", jwt_verify, chat_room.create_chatroom)

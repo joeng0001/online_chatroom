@@ -17,6 +17,10 @@
     <v-btn class="btn" @click="to_register">
       Registration
     </v-btn>
+    &nbsp;
+    <v-btn class="btn" @click="bypass_login_for_testing">
+      bypass login for demo
+    </v-btn>
   </panel>
 </template>
 
@@ -66,8 +70,14 @@ export default {
         })
         .catch(e => {
           console.log(e.message);
-          console.log("login fail")
         });
+    },
+    bypass_login_for_testing() {
+      //for demo
+      this.$store.dispatch('setUserID', "0");
+      this.$store.dispatch('setLoginStatus', true);
+      this.$store.socket = io("http://localhost:8089");
+      this.$router.push("/home");
     },
     toggle_pw_view() {
       //toggle the pw field type

@@ -44,14 +44,14 @@ export default {
       console.log("logging out");
       DataService.user_offline({ id: this.$store.state.userID })
         .then(res => {
-          console.log(res.message)
+
         })
         .catch(e => {
           console.log(e.message);
         });
       this.$store.socket.close();
       this.$store.dispatch('setToken', null);
-      this.$store.dispatch('setUser', null);
+      this.$store.dispatch('setUserID', null);
       this.$store.dispatch('setLoginStatus', false);
       this.$router.push({ path: '/' })
     }

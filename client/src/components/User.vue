@@ -1,11 +1,4 @@
 <template>
-  <!-- <div>
-    this is the user page
-    <div v-for="user in online_users">{{ user.name }} {{ user.online }}</div>
-    <div v-for="user in offline_users">{{ user.name }} {{ user.online }}</div>
-    <v-btn @click="login"> similar login</v-btn>
-    <v-btn @click="logout"> similar logout</v-btn>
-  </div> -->
   <v-dialog v-model="dialog" persistent max-width="600px">
     <v-card>
       <v-text-field label="Description" v-model="description"></v-text-field>
@@ -37,7 +30,7 @@
         <th>
           Description
         </th>
-        <th><!--if it's admin,show this./...To be done.../-->
+        <th>
           Edit
         </th>
 
@@ -98,14 +91,14 @@ export default {
     page: {
       handler(newpage, oldpage) {
         this.curr_display_users_list = this.users_list.slice(newpage * 5 - 5, newpage * 5);
+        //for testing 
+        this.curr_display_users_list.unshift({ id: 0, name: "sample_user", online: true, active_status: true })
       },
       immediate: true
     }
   },
   mounted() {
     this.socket.on('user_online', (user) => {
-      console.log(user)
-      console.log("socket online")
       let target = this.users_list.find((user_obj) => {
         return user_obj.id === user.id;
       })
@@ -114,8 +107,6 @@ export default {
       }
     });
     this.socket.on('user_offline', (user) => {
-      console.log(user)
-      console.log("socket offline")
       let target = this.users_list.find((user_obj) => {
         return user_obj.id === user.id;
       })
@@ -128,9 +119,9 @@ export default {
     })
   },
   methods: {
-    findall_user() {
+    async findall_user() {
       //get all user info
-      DataService.findall_user()
+      await DataService.findall_user()
         .then((res) => {
           this.users_list = res.data;
         })
@@ -140,6 +131,8 @@ export default {
         .catch((e) => {
           console.log(e)
         })
+      //for demo
+      this.curr_display_users_list.unshift({ id: 0, name: "sample_user", online: true, active_status: true })
     },
     Delete_user(id) {
       //remove a user
@@ -154,9 +147,6 @@ export default {
         id: id
       }
       DataService.delete_user(data)
-        .then((res) => {
-          console.log(res.message)
-        })
         .then(() => {
           this.users_list = this.users_list.filter((user) => {
             return user.id != id;
@@ -176,7 +166,7 @@ export default {
       //save the toggled the active status
       DataService.edit_user(user)
         .then((res) => {
-          console.log(res.message)
+
         })
     },
     Submit() {
@@ -184,9 +174,6 @@ export default {
       if (this.dialog_user != null) {
         this.dialog_user.description = this.description;
         DataService.edit_user(this.dialog_user)
-          .then((res) => {
-            console.log(res.message)
-          })
           .then(() => {
             this.dialog_user = null;
             this.dialog = false;

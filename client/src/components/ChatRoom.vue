@@ -86,20 +86,31 @@ export default {
     find_by_id(id) {
       //get user name by it's id
       const res = this.user_lists.find((user) => {
-        return user.id === id
+        console.log(id)
+        console.log(user.id)
+
+
+
+        return String(user.id) === String(id)
       });
       return res === undefined ? "anonymous" : res.name;
     }
     ,
-    findall_user() {
+    async findall_user() {
+      console.log("finding user")
       //get all user info
-      DataService.findall_user()
+      await DataService.findall_user()
         .then((res) => {
           this.user_lists = res.data;
         })
         .catch((err) => {
           console.log(err.message)
         })
+
+      //for demo
+      if (this.room_id === "0") {
+        this.user_lists.unshift({ id: 0, name: "sample_user", online: true, active_status: true })
+      }
     },
     get_chat_record(id) {
       //get chat record by room id
@@ -115,12 +126,24 @@ export default {
         });
     },
     send_chat() {
+
+
+
       //use socket to send message
       var data = {
         content: this.chat, publisherID: this.$store.state.userID,
         room_id: this.room_id,
         chat_target: "anyone", description: "my first chat"
       };
+
+      //for demo
+      if (this.room_id === "0") {
+        data.type = "new_chat"
+        this.socket.emit('message', data);
+        this.chat = "";
+        return
+      }
+
       DataService.add_chat_record(data)//add the msg to db,
         .then(res => {
           data.type = "new_chat"  //specify the type for socket but not dataService
@@ -131,6 +154,7 @@ export default {
         .catch(e => {
           console.log(e.message);
         });
+
     }
   }
 }

@@ -3,7 +3,7 @@
     Create New ChatRoom
   </v-btn>
   <v-btn color="secondary" class="btn" @click="Open_dialog_chat_record(-1)">
-    View all chatrecord
+    View all chatRecord
   </v-btn>
   <Dialog ref="vc" v-on:get_room_info="get_chat_room_list" />
   <v-app class="margintop">
@@ -91,14 +91,16 @@ export default {
     page: {
       handler(newpage, oldpage) {
         this.curr_display_room_list = this.room_list.slice(newpage * 10 - 10, newpage * 10);
+        //for testing 
+        this.curr_display_room_list.unshift({ id: 0, room_name: "sample_room", rood_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
       },
       immediate: true
     }
   },
   methods: {
-    get_chat_room_list() {
+    async get_chat_room_list() {
       //get room info
-      DataService.get_room_list()
+      await DataService.get_room_list({})
         .then(res => {
           this.room_list = res.data;
         })
@@ -108,6 +110,8 @@ export default {
         .catch(e => {
           console.log(e.message);
         });
+      //for testing
+      this.curr_display_room_list.unshift({ id: 0, room_name: "sample_room", rood_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
     },
     Open_dialog(action, room) {
       //call child open dialog method with action type and room info
@@ -123,10 +127,7 @@ export default {
         return
       }
       DataService.remove_chatroom({ room_id: id })
-        .then(res => {
-          console.log(res)
-        })
-        .then(() => {
+        .then((res) => {
           this.get_chat_room_list();
         })
         .catch(e => {
@@ -137,7 +138,6 @@ export default {
     save_active_status(room) {
       DataService.edit_chatroom(room)
         .then((res) => {
-          console.log("update success")
         })
         .catch(e => {
           console.log(e.message);

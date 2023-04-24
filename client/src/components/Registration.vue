@@ -42,11 +42,9 @@ export default {
             DataService.Register({ name: this.username, password: this.password })
                 .then(res => {
                     this.$router.push({ path: '/' })
-                    console.log(res.message)
                 })
                 .catch(e => {
                     console.log(e.message);
-                    alert(e.message, "user name already in use");
                 });
         },
         toggle_pw_view() {

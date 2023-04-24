@@ -78,49 +78,57 @@ export default {
             //display publisher/room name by finding with id
             if (target_list === 'Room') {
                 const res = this.room_lists.find((room) => {
-                    return room.id === id
+                    return String(room.id) === String(id)
                 });
                 return res === undefined ? "not found" : res.room_name;
             }
             if (target_list === 'Publisher') {
                 const res = this.user_lists.find((user) => {
-                    return user.id === id
+                    console.log("publisher", user.id, id)
+                    return String(user.id) === String(id)
                 });
                 return res === undefined ? "not found" : res.name;
             }
         },
-        findall_user() {
+        async findall_user() {
             //get all user info
-            DataService.findall_user()
+            await DataService.findall_user()
                 .then((res) => {
                     this.user_lists = res.data;
                 })
                 .catch((err) => {
                     console.log(err.message)
                 })
+
+            //for demo
+            this.user_lists.unshift({ id: 0, name: "sample_user", online: true, active_status: true })
         },
-        get_chat_room_list() {
+        async get_chat_room_list() {
             //get all room info
-            DataService.get_room_list()
+            await DataService.get_room_list({})
                 .then(res => {
                     this.room_lists = res.data
                 })
                 .catch(e => {
                     console.log(e.message);
                 });
+            //for demo
+            this.room_lists.unshift({ id: 0, room_name: "sample_room", room_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
         },
-        get_chat_record() {
+        async get_chat_record() {
             //get all chat record
             var data = {
                 room_id: this.RoomID,
             };
-            DataService.get_chat_record(data)
+            await DataService.get_chat_record(data)
                 .then(res => {
                     this.chat_records = res.data
                 })
                 .catch(e => {
                     console.log(e.message);
                 });
+            //for demo
+            this.chat_records.unshift({ id: 0, room_id: 0, publisherID: 0, chat_target: "everyone", description: "sample", content: "demo" })
         },
         Deleting(id) {
             //delete chat record

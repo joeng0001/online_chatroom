@@ -113,6 +113,7 @@ export default {
             this.room_action = action
             if (action === 'New')
                 delete this.new_room.id;//let the id auto increment
+            this.page = 1;
             this.dialog = true;
         },
 
@@ -127,7 +128,6 @@ export default {
             this.dialog = false;
             (this.room_action === "New" ? DataService.create_chatroom(this.new_room) : DataService.edit_chatroom(this.new_room))
                 .then((res) => {
-                    console.log(res.message)
                     this.$emit('get_room_info');
                 })
                 .catch((e) => {

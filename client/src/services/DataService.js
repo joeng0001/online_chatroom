@@ -24,8 +24,9 @@ class DataService {
     data.jwt = store.state.token
     return http.post("/user_edition", data);
   }
-  get_room_list() {
-    return http.get("/chat_room");
+  get_room_list(data) {
+    data.jwt = store.state.token
+    return http.post("/chat_room", data);
   }
   login(data) {
     return http.post("/login", data);

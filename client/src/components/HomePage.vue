@@ -11,7 +11,6 @@
 
         </v-row>
     </v-container>
-
 </template>
 
 <script>
@@ -39,12 +38,9 @@ export default {
     },
 
     methods: {
-        get_room_list() {
+        async get_room_list() {
             //get all caht room info
-            var data = {
-                room_id: this.room_id,
-            };
-            DataService.get_room_list(data)
+            await DataService.get_room_list({})
                 .then(res => {
                     this.room_list = res.data;
                     this.curr_display_room_list = this.room_list.slice(0, 5);
@@ -52,6 +48,10 @@ export default {
                 .catch(e => {
                     console.log(e.message);
                 });
+
+            //for demo
+            this.curr_display_room_list.unshift({ id: 0, room_name: "sample_room", room_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
+
         },
     }
 }
