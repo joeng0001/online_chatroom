@@ -15,15 +15,18 @@ var corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const db = require("./app/models");
-db.sequelize.sync();
+
+//const db = require("./app/models");
+//db.sequelize.sync();
+
 require("./app/route/router.route.js")(app);
 require("./app/route/socketio.route.js")(io);
 
-
+const path = require('path');
+const indexPath = path.join(__dirname, '../client/dist/index.html');
 app.use(express.static('../client/dist'));
-app.get('/', (req, res) => {
-  res.sendFile('../client/dist/index.html');
+app.get('*', (req, res) => {
+  res.sendFile(indexPath);
 });
 
 const PORT = 8089;
