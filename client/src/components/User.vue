@@ -91,8 +91,6 @@ export default {
     page: {
       handler(newpage, oldpage) {
         this.curr_display_users_list = this.users_list.slice(newpage * 5 - 5, newpage * 5);
-        //for testing 
-        this.curr_display_users_list.unshift({ id: 0, name: "sample_user", online: true, active_status: true })
       },
       immediate: true
     }
