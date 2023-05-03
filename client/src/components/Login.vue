@@ -85,7 +85,7 @@ export default {
     },
     to_register() {
       //go to register page
-      this.$router.push("/registration");
+      this.$router.push("/registration_page");
     }
   }
 }

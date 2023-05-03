@@ -14,7 +14,6 @@ const routes = [
   },
   {
     path: '/chatroom_page',
-    //query: this.$route.query,
     name: 'chatroom',
     component: chatroom
   },
@@ -38,6 +37,10 @@ const routes = [
     name: 'Home',
     component: Home
   },
+  {
+    path: '/:catchAll(.*)',
+    redirect: '/'
+  }
 ];
 const router = createRouter({
   history: createWebHistory(),
