@@ -91,8 +91,6 @@ export default {
     page: {
       handler(newpage, oldpage) {
         this.curr_display_room_list = this.room_list.slice(newpage * 10 - 10, newpage * 10);
-        //for testing 
-        this.curr_display_room_list.unshift({ id: 0, room_name: "sample_room", rood_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
       },
       immediate: true
     }
@@ -110,6 +108,8 @@ export default {
         .catch(e => {
           console.log(e.message);
         });
+        //for testing 
+        this.curr_display_room_list.unshift({ id: 0, room_name: "sample_room", rood_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
     },
     Open_dialog(action, room) {
       //call child open dialog method with action type and room info
