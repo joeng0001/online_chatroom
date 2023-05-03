@@ -110,8 +110,6 @@ export default {
         .catch(e => {
           console.log(e.message);
         });
-      //for testing
-      this.curr_display_room_list.unshift({ id: 0, room_name: "sample_room", rood_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
     },
     Open_dialog(action, room) {
       //call child open dialog method with action type and room info

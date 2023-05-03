@@ -13,23 +13,23 @@ const routes = [
     component: Login_page
   },
   {
-    path: '/chatroom',
+    path: '/chatroom_page',
     //query: this.$route.query,
     name: 'chatroom',
     component: chatroom
   },
   {
-    path: '/user',
+    path: '/user_page',
     name: 'user',
     component: user
   },
   {
-    path: '/room_list',
+    path: '/room_list_page',
     name: 'room_list',
     component: room_list
   },
   {
-    path: '/registration',
+    path: '/registration_page',
     name: 'registration',
     component: registration
   },
