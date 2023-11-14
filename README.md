@@ -1,12 +1,12 @@
-#Start
-under /server
-"npm install"
-"node server.js"
+# start application
+cd server
+npm install 
+node server.js 
 
-#Config Mysql
-/server/app/config/db.config.js
+choose bypass login to view 
 
-#Apply Mysql
-in server.js,uncomment
-//const db = require("./app/models");
-//db.sequelize.sync();
+# make it a real-time chat
+config server/config/db.config.js
+manually create a MySQL database and provide corresponding information,i.e. host, user etc...
+register 2 new accounts and login
+create chatroom and chat
