@@ -1,4 +1,4 @@
-//import createPersistedState from 'vuex-persistedstate'
+//import createPersistedState from 'vuex-persistedstate'  //deprecated function in vuex
 //createPersistedState()
 
 const store = {
@@ -11,34 +11,32 @@ const store = {
     userID: null,
     loginStatus: false,
   },
-  socket: {
-
-  },
+  socket: {},
   mutations: {
     setToken(state, token) {
-      state.token = token
-      state.loginStatus = !!(token)
-      localStorage.setItem('token', token);
+      state.token = token;
+      state.loginStatus = !!token;
+      localStorage.setItem("token", token);
     },
     setUserID(state, userID) {
-      state.userID = userID
-      localStorage.setItem('userID', userID);
+      state.userID = userID;
+      localStorage.setItem("userID", userID);
     },
     setLoginStatus(state, status) {
-      state.loginStatus = status
-      localStorage.setItem('status', status);
-    }
+      state.loginStatus = status;
+      localStorage.setItem("status", status);
+    },
   },
   actions: {
     setToken({ commit }, token) {
-      commit('setToken', token)
+      commit("setToken", token);
     },
     setUserID({ commit }, userID) {
-      commit('setUserID', userID)
+      commit("setUserID", userID);
     },
     setLoginStatus({ commit }, status) {
-      commit('setLoginStatus', status)
+      commit("setLoginStatus", status);
     },
-  }
-}
-export default store
+  },
+};
+export default store;

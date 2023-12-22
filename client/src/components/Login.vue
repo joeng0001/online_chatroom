@@ -49,7 +49,6 @@ export default {
   },
   methods: {
     login() {
-      //login,init all the param
       DataService.login({ name: this.username, password: this.password })
         .then(res => {
           this.$store.dispatch('setToken', res.data.token)
@@ -65,11 +64,11 @@ export default {
           }
           this.$store.socket.emit('user_online', data);
           this.$store.socket.on('error', (err) => {
-            console.log(err);
+            console.error(err);
           })
         })
         .catch(e => {
-          console.log(e.message);
+          console.error(e.message);
         });
     },
     bypass_login_for_testing() {
@@ -80,11 +79,9 @@ export default {
       this.$router.push("/home");
     },
     toggle_pw_view() {
-      //toggle the pw field type
       this.pw_view = !this.pw_view;
     },
     to_register() {
-      //go to register page
       this.$router.push("/registration_page");
     }
   }

@@ -55,7 +55,6 @@ export default {
     this.get_chat_record(this.room_id);
     this.findall_user();
     this.socket = this.$store.socket;
-
   },
   mounted() {
     this.socket.on('message', (message) => {
@@ -64,7 +63,6 @@ export default {
       }
       if (message.publisherID === this.$store.state.userID) {
         this.$nextTick(() => {
-          //once you send a message,auto scroll to bottom
           var container = document.getElementById("container");
           container.scrollTop = container.scrollHeight;
         })
@@ -80,31 +78,21 @@ export default {
       deep: true
     }
   },
-  computed: {
-  },
   methods: {
     find_by_id(id) {
       //get user name by it's id
       const res = this.user_lists.find((user) => {
-        console.log(id)
-        console.log(user.id)
-
-
-
         return String(user.id) === String(id)
       });
       return res === undefined ? "anonymous" : res.name;
-    }
-    ,
+    },
     async findall_user() {
-      console.log("finding user")
-      //get all user info
       await DataService.findall_user()
         .then((res) => {
           this.user_lists = res.data;
         })
         .catch((err) => {
-          console.log(err.message)
+          console.error(err.message)
         })
 
       //for demo
@@ -122,14 +110,10 @@ export default {
           this.messages = res.data;
         })
         .catch(e => {
-          console.log(e.message);
+          console.error(e.message);
         });
     },
     send_chat() {
-
-
-
-      //use socket to send message
       var data = {
         content: this.chat, publisherID: this.$store.state.userID,
         room_id: this.room_id,
@@ -144,17 +128,15 @@ export default {
         return
       }
 
-      DataService.add_chat_record(data)//add the msg to db,
+      DataService.add_chat_record(data)
         .then(res => {
-          data.type = "new_chat"  //specify the type for socket but not dataService
-          this.socket.emit('message', data);//then send it again to server and server
-          //will then boardcast the msg to all client
+          data.type = "new_chat"
+          this.socket.emit('message', data);
           this.chat = "";
         })
         .catch(e => {
-          console.log(e.message);
+          console.error(e.message);
         });
-
     }
   }
 }

@@ -2,15 +2,14 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const app = express();
-const http = require('http').Server(app)
-const io = require('socket.io')(http, {
+const http = require("http").Server(app);
+const io = require("socket.io")(http, {
   cors: {
     origin: "*",
-  }
-})
+  },
+});
 var corsOptions = {
-  //origin:"http://10.0.2.15:8088" 
-  origin: "*" //set this to * and url to 127.0.0.1 ,both window and ubuntu can connect
+  origin: "*",
 };
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -22,16 +21,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 require("./app/route/router.route.js")(app);
 require("./app/route/socketio.route.js")(io);
 
-const path = require('path');
-const indexPath = path.join(__dirname, '../client/dist/index.html');
-app.use(express.static('../client/dist'));
-app.get('*', (req, res) => {
+const path = require("path");
+const indexPath = path.join(__dirname, "../client/dist/index.html");
+app.use(express.static("../client/dist"));
+app.get("*", (req, res) => {
   res.sendFile(indexPath);
 });
 
 const PORT = 8089;
 http.listen(PORT, () => {
   console.log(`server running at ${PORT}`);
-})
+});
 
 exports.io = io;

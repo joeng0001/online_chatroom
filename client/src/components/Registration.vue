@@ -44,7 +44,7 @@ export default {
                     this.$router.push({ path: '/' })
                 })
                 .catch(e => {
-                    console.log(e.message);
+                    console.error(e.message);
                 });
         },
         toggle_pw_view() {

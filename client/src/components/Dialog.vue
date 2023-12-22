@@ -77,20 +77,15 @@ export default {
     components: {
         ChatRecord
     },
-    //props: ['action', 'room_info'],
     created() {
         this.findall_user();
-    },
-    mounted() {
-
     },
     watch: {
         new_room: {
             handler(newValue, oldValue) {
-                //console.log("the watch active");
                 if (newValue.active_status === 'true')
                     newValue.active_status = true;
-                if (newValue.active_status == 'false')
+                if (newValue.active_status === 'false')
                     newValue.active_status = false;
             },
             deep: true
@@ -98,21 +93,22 @@ export default {
     },
     methods: {
         findall_user() {
-            //get all user info
             DataService.findall_user()
                 .then((all_user) => {
                     this.user_list = all_user.data.map((item) => {
                         return item.name;
                     });
                 })
+                .catch(e => {
+                    console.error(e.message)
+                })
 
         },
         open_dialog(action, room_info) {
-            //open the dialog ,call by parent component
             this.new_room = { ...room_info }
             this.room_action = action
             if (action === 'New')
-                delete this.new_room.id;//let the id auto increment
+                delete this.new_room.id;
             this.page = 1;
             this.dialog = true;
         },
@@ -131,7 +127,7 @@ export default {
                     this.$emit('get_room_info');
                 })
                 .catch((e) => {
-                    console.log(e.message)
+                    console.error(e.message)
                 })
         }
     }

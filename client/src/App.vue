@@ -1,28 +1,23 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   <div id="app">
     <chat_header />
     <router-view />
-
   </div>
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld.vue'
 import chat_header from '@/components/Header.vue'
 import DataService from "./services/DataService.js"
 import { io } from "socket.io-client";
 export default {
   name: 'App',
   components: {
-    //HelloWorld
     chat_header
   },
   beforeCreate() {
     this.$store.dispatch('setToken', localStorage.getItem('token'))
-    this.$store.dispatch('setUserID', parseInt(localStorage.getItem('userID')))//get string,parse to int
-    this.$store.dispatch('setLoginStatus', localStorage.getItem('status') == 'true')//get string,pass to bool
+    this.$store.dispatch('setUserID', parseInt(localStorage.getItem('userID')))
+    this.$store.dispatch('setLoginStatus', localStorage.getItem('status') == 'true')
     this.$store.socket = io("http://localhost:8089")
     const data = {
       id: this.$store.state.userID
@@ -32,7 +27,7 @@ export default {
         console.log(res.message)
       })
       .catch(e => {
-        console.log(e.message);
+        console.error(e.message);
       });
   },
   created() {
@@ -48,7 +43,7 @@ export default {
           console.log(res.message)
         })
         .catch(e => {
-          console.log(e.message);
+          console.error(e.message);
         });
       this.$store.socket.close();
     },

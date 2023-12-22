@@ -10,7 +10,6 @@
         <v-btn color="blue-darken-1" variant="text" @click="Submit">
           Submit
         </v-btn>
-
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -33,7 +32,6 @@
         <th>
           Edit
         </th>
-
       </tr>
     </thead>
     <tbody>
@@ -113,7 +111,7 @@ export default {
       }
     });
     this.socket.on('error', (err) => {
-      console.log(err);
+      console.error(err);
     })
   },
   methods: {
@@ -127,7 +125,7 @@ export default {
           this.curr_display_users_list = this.users_list.slice(0, 5);
         })
         .catch((e) => {
-          console.log(e)
+          console.error(e)
         })
       //for demo
       this.curr_display_users_list.unshift({ id: 0, name: "sample_user", online: true, active_status: true })
@@ -151,7 +149,7 @@ export default {
           })
         })
         .catch(e => {
-          console.log(e.message);
+          console.error(e.message);
         });
     },
     Add_descrition(user) {
@@ -163,9 +161,9 @@ export default {
     save_active_status(user) {
       //save the toggled the active status
       DataService.edit_user(user)
-        .then((res) => {
-
-        })
+        .catch(e => {
+          console.error(e.message);
+        });
     },
     Submit() {
       //edit a user info
@@ -178,10 +176,9 @@ export default {
             this.description = "";
           })
           .catch(e => {
-            console.log(e.message);
+            console.error(e.message);
           });
       }
-
     },
     Close() {
       //close the dialog

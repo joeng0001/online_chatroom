@@ -1,7 +1,5 @@
 <template>
   <v-toolbar color="cyan-lighten-3" align>
-    <!-- <v-toolbar-title> too thick to occupy space
-  </v-toolbar-title> -->
     <v-toolbar-items>
       <v-btn color="blue" :to="{ name: 'Home' }" v-if="$store.state.loginStatus">
         Home Page
@@ -41,13 +39,9 @@ export default {
         online: false,
       }
       this.$store.socket.emit('user_offline', data);
-      console.log("logging out");
       DataService.user_offline({ id: this.$store.state.userID })
-        .then(res => {
-
-        })
         .catch(e => {
-          console.log(e.message);
+          console.error(e.message);
         });
       this.$store.socket.close();
       this.$store.dispatch('setToken', null);

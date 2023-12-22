@@ -26,8 +26,6 @@ export default {
     created() {
         this.get_room_list();
     },
-    mounted() {
-    },
     watch: {
         page: {
             handler(newpage, oldpage) {
@@ -39,19 +37,17 @@ export default {
 
     methods: {
         async get_room_list() {
-            //get all caht room info
             await DataService.get_room_list({})
                 .then(res => {
                     this.room_list = res.data;
                     this.curr_display_room_list = this.room_list.slice(0, 5);
                 })
                 .catch(e => {
-                    console.log(e.message);
+                    console.error(e.message);
                 });
 
             //for demo
             this.curr_display_room_list.unshift({ id: 0, room_name: "sample_room", room_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
-
         },
     }
 }

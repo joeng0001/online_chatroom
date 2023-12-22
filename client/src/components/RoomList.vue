@@ -106,21 +106,20 @@ export default {
           this.curr_display_room_list = this.room_list.slice(0, 10);
         })
         .catch(e => {
-          console.log(e.message);
+          console.error(e.message);
         });
-        //for testing 
-        this.curr_display_room_list.unshift({ id: 0, room_name: "sample_room", rood_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
+      //for demo 
+      this.curr_display_room_list.unshift({ id: 0, room_name: "sample_room", rood_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
     },
     Open_dialog(action, room) {
       //call child open dialog method with action type and room info
-      this.$refs.vc.open_dialog(action, action === 'New' ? this.room_prototype : room);//this will active the dialog by changing "dialog" to true in dialog component 
+      this.$refs.vc.open_dialog(action, action === 'New' ? this.room_prototype : room);
     },
     Open_dialog_chat_record(id) {
-      //call child open cha record page
+      //call child open chat record page
       this.$refs.vc.open_dialog_chat_record(id);
     },
     Deleting(id) {
-      //delete a chatroom
       if (!confirm("delete the chatroom?")) {
         return
       }
@@ -129,16 +128,13 @@ export default {
           this.get_chat_room_list();
         })
         .catch(e => {
-          console.log(e.message);
+          console.error(e.message);
         });
-
     },
     save_active_status(room) {
       DataService.edit_chatroom(room)
-        .then((res) => {
-        })
         .catch(e => {
-          console.log(e.message);
+          console.error(e.message);
         });
     }
   }

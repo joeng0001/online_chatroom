@@ -69,13 +69,9 @@ export default {
         this.get_chat_record();
         this.findall_user();
     },
-    watch: {
-        // whenever question changes, this function will run
-    },
     props: ['RoomID'],
     methods: {
         find_by_id(target_list, id) {
-            //display publisher/room name by finding with id
             if (target_list === 'Room') {
                 const res = this.room_lists.find((room) => {
                     return String(room.id) === String(id)
@@ -91,13 +87,12 @@ export default {
             }
         },
         async findall_user() {
-            //get all user info
             await DataService.findall_user()
                 .then((res) => {
                     this.user_lists = res.data;
                 })
                 .catch((err) => {
-                    console.log(err.message)
+                    console.error(err.message)
                 })
 
             //for demo
@@ -110,7 +105,7 @@ export default {
                     this.room_lists = res.data
                 })
                 .catch(e => {
-                    console.log(e.message);
+                    console.error(e.message);
                 });
             //for demo
             this.room_lists.unshift({ id: 0, room_name: "sample_room", room_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
@@ -125,13 +120,12 @@ export default {
                     this.chat_records = res.data
                 })
                 .catch(e => {
-                    console.log(e.message);
+                    console.error(e.message);
                 });
             //for demo
             this.chat_records.unshift({ id: 0, room_id: 0, publisherID: 0, chat_target: "everyone", description: "sample", content: "demo" })
         },
         Deleting(id) {
-            //delete chat record
             if (!confirm("delete?")) {
                 return
             }
@@ -148,7 +142,7 @@ export default {
                     })
                 })
                 .catch(e => {
-                    console.log(e.message);
+                    console.error(e.message);
                 });
 
         }
