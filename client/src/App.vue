@@ -15,20 +15,26 @@ export default {
     chat_header
   },
   beforeCreate() {
-    this.$store.dispatch('setToken', localStorage.getItem('token'))
-    this.$store.dispatch('setUserID', parseInt(localStorage.getItem('userID')))
-    this.$store.dispatch('setLoginStatus', localStorage.getItem('status') == 'true')
-    this.$store.socket = io("http://localhost:8089")
-    const data = {
-      id: this.$store.state.userID
-    }
-    DataService.add_online_account(data)
-      .then(res => {
-        console.log(res.message)
+    if(localStorage.getItem('token')){ //if login before,auto login
+      this.$store.dispatch('setToken', localStorage.getItem('token'))
+      this.$store.dispatch('setUserID', parseInt(localStorage.getItem('userID')))
+      this.$store.dispatch('setLoginStatus', localStorage.getItem('status') == 'true')
+      this.$store.socket = io("http://localhost:8089")
+      DataService.add_online_account({ //that will verify the token
+        id: this.$store.state.userID
       })
-      .catch(e => {
-        console.error(e.message);
-      });
+        .then(res => {
+          console.log(res.message)
+        })
+        .catch(e => {
+          console.error(e.message); //if error,auto logout
+          this.$store.dispatch('setToken', '')
+          this.$store.dispatch('setUserID', null)
+          this.$store.dispatch('setLoginStatus', false)
+          router.push("/");
+        });
+    }
+    
   },
   created() {
     window.addEventListener("beforeunload", this.leaving);

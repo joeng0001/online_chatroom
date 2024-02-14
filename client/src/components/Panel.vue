@@ -3,7 +3,6 @@
     <v-toolbar class="toolbar">
       <v-toolbar-title>{{ title }}</v-toolbar-title>
     </v-toolbar>
-
     <div>
       <slot>
         No Centent Defined

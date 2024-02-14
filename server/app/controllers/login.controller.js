@@ -1,5 +1,5 @@
-const db = require("../models");
-const user = db.user;
+const {db} = require("../models");
+const user=db.user
 const jwt = require("jsonwebtoken");
 const jwt_config = require("../config/jwt.config.js");
 function jwtSignUser(user) {
@@ -43,8 +43,8 @@ exports.login = async (req, res) => {
       });
     })
     .catch((err) => {
-      res.sendStatus(500, {
-        message: err,
+      res.sendStatus(401, {
+        message: "login failure",
       });
     });
 };
@@ -77,7 +77,7 @@ exports.add_online_account = async (req, res) => {
     })
     .catch((err) => {
       res.sendStatus(500, {
-        message: err,
+        message: "fail to update to online",
       });
     });
 };

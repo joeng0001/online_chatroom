@@ -45,9 +45,6 @@ export default {
                 .catch(e => {
                     console.error(e.message);
                 });
-
-            //for demo
-            this.curr_display_room_list.unshift({ id: 0, room_name: "sample_room", room_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
         },
     }
 }
@@ -57,13 +54,12 @@ export default {
 <style scoped>
 .card {
     border: solid 1px;
+    border-radius: 100px;
+    font-size: 25px;
 }
 
 .card:hover {
     transition: all 0.3s ease;
     background-color: rgba(3, 218, 198, 0.7);
-    padding: 20px;
-    font-size: 25px;
-    border-radius: 100px
 }
 </style>

@@ -8,13 +8,13 @@ module.exports = io => {
         });
         socket.on('user_online', (data) => {
             try {
-                if (!jwt.verify(data.jwt, jwt_config.jwtSecret)) {
-                    res.send({ message: "jwt verification failed" })
+                if (!data.jwt||jwt.verify(data.jwt, jwt_config.jwtSecret)) {
+                    res.status(401).send({ message: "jwt verification failed" })
                     return
                 }
                 data.online = true;
                 user_control.update_user(data, socket);
-                io.emit('user_online', data) //socket used for sending error
+                io.emit('user_online', data) 
             } catch (e) {
                 socket.emit('error', e)
             }

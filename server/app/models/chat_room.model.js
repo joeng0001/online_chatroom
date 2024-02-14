@@ -1,5 +1,5 @@
-module.exports = (sequelize, Sequelize) => {
-  const room_list = sequelize.define("room_lists", {
+module.exports =async (sequelize, Sequelize) => {
+  const room_list = await sequelize.define("room_lists", {
     room_name: {
       type: Sequelize.STRING
     },

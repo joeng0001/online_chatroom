@@ -1,5 +1,5 @@
-const db = require("../models");
-const db_user = db.user;
+const {db} = require("../models");
+let db_user = db.user;
 const io_obj = require("../../server");
 exports.findall_user = async (req, res) => {
   await db_user
@@ -9,11 +9,12 @@ exports.findall_user = async (req, res) => {
       user.forEach((obj) => {
         delete obj.password;
       });
+      console.log("sending back",user)
       res.send(user);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err,
+        message: "fail to get users",
       });
     });
 };
@@ -29,7 +30,7 @@ exports.update_user = async (user, socket) => {
       }
     )
     .catch((err) => {
-      socket.emit("err", err);
+      socket.emit("update failure");
     });
 };
 
@@ -63,7 +64,7 @@ exports.delete_user = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err,
+        message: "fail to delete user",
       });
     });
 };
@@ -106,7 +107,7 @@ exports.user_offline = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err,
+        message: "fail to remark offline",
       });
     });
 };

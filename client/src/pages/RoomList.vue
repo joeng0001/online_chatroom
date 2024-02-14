@@ -21,10 +21,9 @@
           <th>
             Welcome Message
           </th>
-          <th><!--if it's admin,show this./...To be done.../-->
+          <th>
             Edit
           </th>
-
         </tr>
       </thead>
       <tbody>
@@ -59,7 +58,7 @@
 
 <script>
 import DataService from "../services/DataService.js"
-import Dialog from "./Dialog.vue"
+import Dialog from "../components/Dialog.vue"
 export default {
   data() {
     return {
@@ -108,8 +107,6 @@ export default {
         .catch(e => {
           console.error(e.message);
         });
-      //for demo 
-      this.curr_display_room_list.unshift({ id: 0, room_name: "sample_room", rood_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
     },
     Open_dialog(action, room) {
       //call child open dialog method with action type and room info

@@ -1,5 +1,5 @@
 module.exports = {
-    HOST: "localhost",
+    HOST: "db",
     USER: "root",
     PASSWORD: "password",
     DB: "online_chat",

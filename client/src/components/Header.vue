@@ -10,12 +10,10 @@
     </v-toolbar-items>
 
     <v-toolbar-items style="padding-left:200px;">
-      <!-- <v-btn :to="{ name: 'user' }" class="light" v-if="$store.state.loginStatus && $store.state.userID === 1"> -->
-      <v-btn :to="{ name: 'user' }" class="light" v-if="$store.state.loginStatus">
+      <v-btn :to="{ name: 'user' }" class="light" v-if="$store.state.loginStatus && $store.state.userID === 1">
         user_list
       </v-btn>
-      <!-- <v-btn :to="{ name: 'room_list' }" class="light" v-if="$store.state.loginStatus && $store.state.userID === 1"> -->
-      <v-btn :to="{ name: 'room_list' }" class="light" v-if="$store.state.loginStatus">
+      <v-btn :to="{ name: 'room_list' }" class="light" v-if="$store.state.loginStatus && $store.state.userID === 1">
         room_list
       </v-btn>
       <v-spacer></v-spacer>
@@ -44,7 +42,7 @@ export default {
           console.error(e.message);
         });
       this.$store.socket.close();
-      this.$store.dispatch('setToken', null);
+      this.$store.dispatch('setToken', '');
       this.$store.dispatch('setUserID', null);
       this.$store.dispatch('setLoginStatus', false);
       this.$router.push({ path: '/' })

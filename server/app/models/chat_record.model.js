@@ -1,5 +1,5 @@
-module.exports = (sequelize, Sequelize) => {
-  const chat_record = sequelize.define("chat_record", {
+module.exports = async (sequelize, Sequelize) => {
+  const chat_record =await sequelize.define("chat_record", {
     content: {
       type: Sequelize.STRING
     },

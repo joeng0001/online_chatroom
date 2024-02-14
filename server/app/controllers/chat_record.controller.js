@@ -1,4 +1,4 @@
-const db = require("../models");
+const {db} = require("../models");
 const Chat_record = db.chat_record;
 const { Op } = require("sequelize");
 exports.get_chat_record = async (req, res) => {
@@ -27,7 +27,7 @@ exports.get_chat_record = async (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: err
+        message: "fail to get records"
       });
     });
 };
@@ -41,7 +41,7 @@ exports.create_chat_record = async (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: err
+        message: "fail to insert record"
       });
     });
 };
@@ -55,7 +55,7 @@ exports.delete_chat_record = async (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: err
+        message: "fail to delete record"
       });
     });
 };

@@ -15,11 +15,12 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//const db = require("./app/models");
-//db.sequelize.sync();
+const {connectDB}= require("./app/models"); // init db
+connectDB().then(()=>{
+  require("./app/route/router.route.js")(app);
+  require("./app/route/socketio.route.js")(io);
+})
 
-require("./app/route/router.route.js")(app);
-require("./app/route/socketio.route.js")(io);
 
 const path = require("path");
 const indexPath = path.join(__dirname, "../client/dist/index.html");

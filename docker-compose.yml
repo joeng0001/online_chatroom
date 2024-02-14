@@ -1,0 +1,15 @@
+services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - ./initDB:/docker-entrypoint-initdb.d
+  server:
+    build:
+      context: .
+    container_name: server
+    ports:
+      - "8089:8089"
+    depends_on:
+      - db

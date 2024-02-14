@@ -27,7 +27,7 @@
 
 <script>
 import DataService from "../services/DataService.js"
-import panel from "./Panel.vue"
+import panel from "../components/Panel.vue"
 import { io } from "socket.io-client";
 export default {
   name: 'Login',
@@ -49,8 +49,10 @@ export default {
   },
   methods: {
     login() {
+      console.log("calling dataservice login ")
       DataService.login({ name: this.username, password: this.password })
         .then(res => {
+          console.log("initing socket")
           this.$store.dispatch('setToken', res.data.token)
           this.$store.dispatch('setUserID', res.data.user_id)
           this.$store.dispatch('setLoginStatus', true)
@@ -62,6 +64,7 @@ export default {
             online: true,
             jwt: this.$store.state.toekn
           }
+          console.log("emit online")
           this.$store.socket.emit('user_online', data);
           this.$store.socket.on('error', (err) => {
             console.error(err);

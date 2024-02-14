@@ -94,8 +94,8 @@ export default {
     methods: {
         findall_user() {
             DataService.findall_user()
-                .then((all_user) => {
-                    this.user_list = all_user.data.map((item) => {
+                .then((res) => {
+                    this.user_list = res.data.map((item) => {
                         return item.name;
                     });
                 })

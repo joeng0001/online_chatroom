@@ -9,8 +9,8 @@ module.exports = app => {
   const register = require("../controllers/registration.controller.js")
   const jwt_config = require('../config/jwt.config.js')
   const jwt_verify = (req, res, next) => {
-    if (!jwt.verify(req.body.jwt, jwt_config.jwtSecret)) {
-      res.send({ message: "jwt verification failed" })
+    if (!req.body.jwt||!jwt.verify(req.body.jwt, jwt_config.jwtSecret)) {
+      res.status(401).send({ message: "jwt verification failed" })
       return
     } else {
       next()

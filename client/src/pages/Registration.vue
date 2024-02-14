@@ -6,7 +6,6 @@
             <v-icon class="right" @click="toggle_pw_view">
                 mdi-eye-outline
             </v-icon>
-
         </v-text-field>
         <br>
         <div class="danger-alert" />
@@ -19,7 +18,7 @@
 
 <script>
 import DataService from "../services/DataService.js"
-import panel from "./Panel.vue"
+import panel from "../components/Panel.vue"
 export default {
     data() {
         return {
@@ -38,7 +37,6 @@ export default {
     },
     methods: {
         Register() {
-            //call register method
             DataService.Register({ name: this.username, password: this.password })
                 .then(res => {
                     this.$router.push({ path: '/' })

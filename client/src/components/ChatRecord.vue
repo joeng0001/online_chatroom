@@ -94,9 +94,6 @@ export default {
                 .catch((err) => {
                     console.error(err.message)
                 })
-
-            //for demo
-            this.user_lists.unshift({ id: 0, name: "sample_user", online: true, active_status: true })
         },
         async get_chat_room_list() {
             //get all room info
@@ -107,8 +104,6 @@ export default {
                 .catch(e => {
                     console.error(e.message);
                 });
-            //for demo
-            this.room_lists.unshift({ id: 0, room_name: "sample_room", room_admin: "sample_user", active_status: true, welcome_msg: "sample chatroom" })
         },
         async get_chat_record() {
             //get all chat record
@@ -122,8 +117,6 @@ export default {
                 .catch(e => {
                     console.error(e.message);
                 });
-            //for demo
-            this.chat_records.unshift({ id: 0, room_id: 0, publisherID: 0, chat_target: "everyone", description: "sample", content: "demo" })
         },
         Deleting(id) {
             if (!confirm("delete?")) {
@@ -144,7 +137,6 @@ export default {
                 .catch(e => {
                     console.error(e.message);
                 });
-
         }
     }
 }
@@ -156,8 +148,6 @@ export default {
     width: 100%;
     padding-left: 100px;
 }
-
-
 
 .border_style {
     border: 1px solid lightgreen;

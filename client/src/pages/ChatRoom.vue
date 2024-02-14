@@ -94,11 +94,6 @@ export default {
         .catch((err) => {
           console.error(err.message)
         })
-
-      //for demo
-      if (this.room_id === "0") {
-        this.user_lists.unshift({ id: 0, name: "sample_user", online: true, active_status: true })
-      }
     },
     get_chat_record(id) {
       //get chat record by room id
@@ -119,15 +114,6 @@ export default {
         room_id: this.room_id,
         chat_target: "anyone", description: "my first chat"
       };
-
-      //for demo
-      if (this.room_id === "0") {
-        data.type = "new_chat"
-        this.socket.emit('message', data);
-        this.chat = "";
-        return
-      }
-
       DataService.add_chat_record(data)
         .then(res => {
           data.type = "new_chat"

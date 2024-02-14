@@ -1,15 +1,10 @@
-purpose in vuejs learning
-
 # docker 
-docker build -t chatroom .
-docker run -p 8089:8089 chatroom 
-# start application
-cd server
-npm install 
-node server.js 
+dokcer-compose up 
 
 # db config
 server/config/db.config.js
+docker-compose.yml
+initDB
 
 # url 
 localhost:8089

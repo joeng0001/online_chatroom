@@ -1,10 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Login_page from "@/components/Login";
-import chatroom from "@/components/ChatRoom";
-import user from "@/components/User";
-import room_list from "@/components/RoomList";
-import registration from "@/components/Registration";
-import Home from "@/components/HomePage";
+import Login_page from "@/pages/Login";
+import chatroom from "@/pages/ChatRoom";
+import user from "@/pages/User";
+import room_list from "@/pages/RoomList";
+import registration from "@/pages/Registration";
+import Home from "@/pages/HomePage";
 import vuex_store from "./store.js";
 const routes = [
   {

@@ -10,8 +10,8 @@ async function hashPassword(user, options) {
   user.setDataValue('password', hash);
 }
 
-module.exports = (sequelize, Sequelize) => {
-  const user = sequelize.define("user", {
+module.exports = async (sequelize, Sequelize) => {
+  const user =await  sequelize.define("user", {
     name: {
       type: Sequelize.STRING
     },

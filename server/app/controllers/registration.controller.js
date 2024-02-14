@@ -1,5 +1,5 @@
-const db = require("../models");
-const user = db.user;
+const {db} = require("../models");
+const user=db.user
 
 exports.create_user = async (req, res) => {
   //find duplicate
@@ -28,7 +28,7 @@ exports.create_user = async (req, res) => {
     })
     .catch((err) => {
       res.sendStatus(500, {
-        message: err,
+        message: "fail to create user",
       });
     });
 };

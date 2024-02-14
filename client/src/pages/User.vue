@@ -120,15 +120,12 @@ export default {
       await DataService.findall_user()
         .then((res) => {
           this.users_list = res.data;
-        })
-        .then(() => {
+          console.log(this.users_list.length)
           this.curr_display_users_list = this.users_list.slice(0, 5);
         })
         .catch((e) => {
           console.error(e)
         })
-      //for demo
-      this.curr_display_users_list.unshift({ id: 0, name: "sample_user", online: true, active_status: true })
     },
     Delete_user(id) {
       //remove a user

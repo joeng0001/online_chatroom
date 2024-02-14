@@ -1,4 +1,4 @@
-const db = require("../models");
+const {db} = require("../models");
 const Chat_Room = db.chat_room;
 
 exports.get_room_list = async (req, res) => {
@@ -9,7 +9,7 @@ exports.get_room_list = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err,
+        message: "fail to get chatroom",
       });
     });
 };
@@ -20,7 +20,7 @@ exports.create_chatroom = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err,
+        message: "fail to create chatroom",
       });
     });
 };
@@ -31,7 +31,7 @@ exports.edit_chatroom = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err,
+        message: "fail to update chatroom record",
       });
     });
 };
@@ -46,7 +46,7 @@ exports.remove_chatroom = async (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err,
+        message: "fail to remove chatroom",
       });
     });
 };
