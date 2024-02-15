@@ -1,9 +1,20 @@
 <template>
+    
+    <v-autocomplete
+        label="Search Type"
+        :items="search_type_list"
+        v-model="search_type"
+        class="mx-3 my-1"
+    ></v-autocomplete>
+    <v-text-field label="Search by text" v-model="search_content" :disabled="!search_type" class="mx-3 my-1"></v-text-field>
     <v-table theme="light" class="left">
         <thead>
             <tr>
                 <th>
                     id
+                </th>
+                <th>
+                    Room ID
                 </th>
                 <th>
                     Room Name
@@ -27,8 +38,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="record in chat_records" :key="record.id">
+            <tr v-for="record in curr_display_chat_records" :key="record.id">
                 <td class="border_style">{{ record.id }}</td>
+                <td class="border_style">{{ record.room_id }}</td>
                 <td class="border_style">{{
                     this.find_by_id('Room', record.room_id)
                 }}</td>
@@ -58,11 +70,28 @@ export default {
         return {
             room_lists: [],
             chat_records: [],
+            curr_display_chat_records:[],
             user_lists: [],
+            search_content:"",
+            search_type:"",
+            search_type_list:[]
         };
     },
     components: {
         Dialog
+    },
+    watch:{
+        search_content:{
+            handler(newVal,oldVal){
+                if(newVal){
+                    this.curr_display_chat_records=this.chat_records.filter(rec=>{
+                        return rec[this.search_type].toString().includes(newVal)
+                    })
+                }else{
+                    this.curr_display_chat_records=this.chat_records
+                }
+            }
+        },
     },
     created() {
         this.get_chat_room_list();
@@ -80,7 +109,6 @@ export default {
             }
             if (target_list === 'Publisher') {
                 const res = this.user_lists.find((user) => {
-                    console.log("publisher", user.id, id)
                     return String(user.id) === String(id)
                 });
                 return res === undefined ? "not found" : res.name;
@@ -112,7 +140,12 @@ export default {
             };
             await DataService.get_chat_record(data)
                 .then(res => {
-                    this.chat_records = res.data
+                    this.chat_records = res.data.map(rec=>{
+                        rec.room_name=this.find_by_id('Room', rec.room_id)
+                        return rec
+                    })
+                    this.curr_display_chat_records=this.chat_records
+                    this.search_type_list=Object.keys(this.chat_records[0]??{})
                 })
                 .catch(e => {
                     console.error(e.message);
@@ -126,10 +159,7 @@ export default {
                 id: id,
             };
             DataService.delete_chat_record(data)
-                .then(res => {
-                    console.log(res.message)
-                })
-                .then(() => {
+                .then(res=> {
                     this.chat_records = this.chat_records.filter((chat) => {
                         return chat.id != id;
                     })
