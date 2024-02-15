@@ -14,7 +14,7 @@ class DataService {
     return http.put("/chat_record_deletion", data);
   }
   findall_user() {
-    return http.get("/user");
+    return http.post("/get_users");
   }
   delete_user(data) {
     data.jwt = store.state.token;

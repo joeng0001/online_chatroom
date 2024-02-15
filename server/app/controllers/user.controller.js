@@ -9,13 +9,10 @@ exports.findall_user = async (req, res) => {
       user.forEach((obj) => {
         delete obj.password;
       });
-      console.log("sending back",user)
       res.send(user);
     })
     .catch((err) => {
-      res.status(500).send({
-        message: "fail to get users",
-      });
+      res.status(500).json({message:'server error,fail to get users'});
     });
 };
 
@@ -30,7 +27,7 @@ exports.update_user = async (user, socket) => {
       }
     )
     .catch((err) => {
-      socket.emit("update failure");
+      socket.emit("update user failure");
     });
 };
 
@@ -48,9 +45,7 @@ exports.edit_user = async (req, res) => {
       res.send({ message: "success" });
     })
     .catch((err) => {
-      res.status(500).send({
-        message: err,
-      });
+      res.status(500).json({message:'server error,fail to update user'});
     });
 };
 
@@ -63,9 +58,7 @@ exports.delete_user = async (req, res) => {
       res.send({ message: "chat record successfully delete" });
     })
     .catch((err) => {
-      res.status(500).send({
-        message: "fail to delete user",
-      });
+      res.status(500).json({message:'server error,fail to delete user'});
     });
 };
 
@@ -85,9 +78,6 @@ exports.user_offline = async (req, res) => {
           },
         }
       );
-      return target_user;
-    })
-    .then(async (target_user) => {
       delete target_user.password;
       if (target_user.curr_online_account - 1 === 0) {
         target_user.online = false;
@@ -101,13 +91,9 @@ exports.user_offline = async (req, res) => {
         );
         io_obj.io.emit("user_offline", target_user);
       }
-    })
-    .then(() => {
       res.send({ message: "success" });
     })
     .catch((err) => {
-      res.status(500).send({
-        message: "fail to remark offline",
-      });
+      res.status(500).json({message:'server error,fail to update user offline status'});
     });
 };

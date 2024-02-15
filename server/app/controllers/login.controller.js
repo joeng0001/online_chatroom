@@ -18,9 +18,14 @@ exports.login = async (req, res) => {
       },
     })
     .then(async (target_user) => {
+      if(!target_user){
+        res.status(404).json({message:'user not found'});
+        return
+      }
       const valid = await target_user.comparePassword(req.body.password);
       if (!valid) {
-        throw "password not correct";
+        res.status(403).json({message:'incorrect user info'});
+        return
       }
       await user.update(
         {
@@ -33,9 +38,6 @@ exports.login = async (req, res) => {
           },
         }
       );
-      return target_user;
-    })
-    .then((target_user) => {
       res.send({
         user_id: target_user.dataValues.id,
         user_name: target_user.dataValues.name,
@@ -43,9 +45,7 @@ exports.login = async (req, res) => {
       });
     })
     .catch((err) => {
-      res.sendStatus(401, {
-        message: "login failure",
-      });
+      res.status(403).json({message:'incorrect user info'});
     });
 };
 
@@ -53,11 +53,18 @@ exports.add_online_account = async (req, res) => {
   await user
     .findOne({
       where: {
-        id: req.body.id,
-        active_status: true,
+        id: req.body.id
       },
     })
     .then(async (target_user) => {
+      if(!target_user){
+        res.status(404).json({message:'user not found'});
+        return
+      }
+      if(!target_user.active_status){
+        res.status(401).json({message:'user being block'});
+        return
+      }
       await user.update(
         {
           curr_online_account: target_user.curr_online_account + 1,
@@ -69,15 +76,11 @@ exports.add_online_account = async (req, res) => {
           },
         }
       );
-    })
-    .then(() => {
       res.send({
         message: "success",
       });
     })
     .catch((err) => {
-      res.sendStatus(500, {
-        message: "fail to update to online",
-      });
+      res.status(409).json({message:'server error,fail to update user online'});
     });
 };

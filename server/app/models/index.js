@@ -37,9 +37,9 @@ const connectDB=async ()=>{
   }
 
   //db connected,init admin
-  await db.user.count({ where: { id:1 } })
-  .then(async count => {
-    if(count==0){
+  await db.user.findOne({ where: { id:1 } })
+  .then(async user => {
+    if(!user){
       const new_user = {
           name: "admin",
           password: "admin",
@@ -48,6 +48,26 @@ const connectDB=async ()=>{
           curr_online_account: 0,
         };
       await db.user.create(new_user).catch(e=>{
+        console.log(e)
+      })
+    }
+  }).catch(e=>{
+    console.log(e)
+  })
+
+  //create a default chatroom
+  await db.chat_room.findOne({ where: { id:1 } })
+  .then(async room => {
+    if(!room){
+      const new_room= {
+        id: 1,
+        room_name: 'default room 1',
+        welcome_msg: 'welcome all',
+        room_admin: 'admin',
+        remark: null,
+        active_status: true,
+      }
+      await db.chat_room.create(new_room).catch(e=>{
         console.log(e)
       })
     }

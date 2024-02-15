@@ -12,7 +12,8 @@ exports.create_user = async (req, res) => {
     .then(async (match) => {
       //if user found,the account have been used
       if (match) {
-        throw "account already in use";
+        res.status(409).json({message:'user existed,try other'});
+        return
       } else {
         const new_user = {
           name: req.body.name,
@@ -27,8 +28,6 @@ exports.create_user = async (req, res) => {
       }
     })
     .catch((err) => {
-      res.sendStatus(500, {
-        message: "fail to create user",
-      });
+      res.status(500).json({message:'server error,fail to register'});
     });
 };

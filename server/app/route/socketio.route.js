@@ -9,7 +9,7 @@ module.exports = io => {
         socket.on('user_online', (data) => {
             try {
                 if (!data.jwt||jwt.verify(data.jwt, jwt_config.jwtSecret)) {
-                    res.status(401).send({ message: "jwt verification failed" })
+                    res.status(401).json({message:'authentication failure'});
                     return
                 }
                 data.online = true;

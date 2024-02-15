@@ -7,44 +7,46 @@
                     </v-pagination>
                 </v-card>
                 <v-card v-if="page == 1">
-                    <v-card-title>
-                        <span class="text-h5">{{ room_action ? room_action : "New" }}</span>
-                    </v-card-title>
-                    <v-card-text>
-                        <v-container>
-                            <v-row>
-                                <v-col cols="10" sm="6" md="5">
-                                    <v-text-field label="Room Name" required v-model="new_room.room_name"></v-text-field>
-                                </v-col>
-                                <v-col cols="10" sm="6" md="5">
-                                    <v-text-field label="Welcome message" hint="Message that will show to all"
-                                        persistent-hint required v-model="new_room.welcome_msg"></v-text-field>
-                                </v-col>
-                                <v-col cols="10" sm="5">
-                                    <v-select :items="user_list" label="Admin" required v-model="new_room.room_admin">
-                                    </v-select>
-                                </v-col>
-                                <v-col cols="10">
-                                    <v-text-field label="Remark" v-model="new_room.remark"></v-text-field>
-                                </v-col>
-                                <v-col cols="10" sm="5">
-                                    <v-select :items="['true', 'false']" label="Active"
-                                        hint="true for active,false for deactive" required
-                                        v-model="new_room.active_status"></v-select>
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                        <small>required field</small>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
-                            Close
-                        </v-btn>
-                        <v-btn color="blue-darken-1" variant="text" @click="Save">
-                            Save
-                        </v-btn>
-                    </v-card-actions>
+                    <v-form ref="form"  @submit.prevent="Save">
+                        <v-card-title>
+                            <span class="text-h5">{{ room_action ? room_action : "New" }}</span>
+                        </v-card-title>
+                        <v-card-text>
+                                <v-container>
+                                    <v-row>
+                                        <v-col cols="10" sm="6" md="5">
+                                            <v-text-field label="* Room Name" required v-model="new_room.room_name" :rules="rules"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="10" sm="6" md="5">
+                                            <v-text-field label="Welcome message" hint="Message that will show to all"
+                                                persistent-hint v-model="new_room.welcome_msg"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="10" sm="5">
+                                            <v-select :items="user_list" label="* Owner" required v-model="new_room.room_admin" :rules="rules">
+                                            </v-select>
+                                        </v-col>
+                                        <v-col cols="10">
+                                            <v-text-field label="Remark" v-model="new_room.remark"></v-text-field>
+                                        </v-col>
+                                        <v-col cols="10" sm="5">
+                                            <v-select :items="['true', 'false']" label="* Active"
+                                                hint="true for active,false for deactive" required
+                                                v-model="new_room.active_status" :rules="rules"></v-select>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                            <small class="text-red">* required field</small>
+                        </v-card-text>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="blue-darken-1" variant="text" @click="dialog = false">
+                                Close
+                            </v-btn>
+                            <v-btn color="blue-darken-1" variant="text" type="submit">
+                                Save
+                            </v-btn>
+                        </v-card-actions>
+                    </v-form>
                 </v-card>
                 <v-card v-if="page == 2">
                     <ChatRecord :RoomID="chat_record_room_id" />
@@ -62,7 +64,6 @@ export default {
             dialog: false,
             user_list: [],
             new_room: {
-                id: null,
                 room_name: null,
                 welcome_msg: null,
                 room_admin: null,
@@ -71,7 +72,12 @@ export default {
             },
             room_action: null,
             page: 1,
-            chat_record_room_id: 1
+            chat_record_room_id: 1,
+            rules: [
+                value => {
+                    if (!value) return "required field"
+                },
+            ],
         };
     },
     components: {
@@ -119,7 +125,11 @@ export default {
             this.dialog = true;
             this.page = 2;
         },
-        Save() {
+        async Save() {
+            const status=await this.$refs.form.validate()
+            if(!status.valid){
+                return
+            }
             //update the chat room info
             this.dialog = false;
             (this.room_action === "New" ? DataService.create_chatroom(this.new_room) : DataService.edit_chatroom(this.new_room))

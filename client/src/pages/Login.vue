@@ -18,9 +18,6 @@
       Registration
     </v-btn>
     &nbsp;
-    <v-btn class="btn" @click="bypass_login_for_testing">
-      bypass login for demo
-    </v-btn>
   </panel>
 </template>
 
@@ -49,10 +46,8 @@ export default {
   },
   methods: {
     login() {
-      console.log("calling dataservice login ")
       DataService.login({ name: this.username, password: this.password })
         .then(res => {
-          console.log("initing socket")
           this.$store.dispatch('setToken', res.data.token)
           this.$store.dispatch('setUserID', res.data.user_id)
           this.$store.dispatch('setLoginStatus', true)
@@ -64,22 +59,15 @@ export default {
             online: true,
             jwt: this.$store.state.toekn
           }
-          console.log("emit online")
           this.$store.socket.emit('user_online', data);
           this.$store.socket.on('error', (err) => {
             console.error(err);
+            alert(err.response.data.message??err.response.data??'error')
           })
         })
         .catch(e => {
-          console.error(e.message);
+          console.error(e);
         });
-    },
-    bypass_login_for_testing() {
-      //for demo
-      this.$store.dispatch('setUserID', "0");
-      this.$store.dispatch('setLoginStatus', true);
-      this.$store.socket = io("http://localhost:8089");
-      this.$router.push("/home");
     },
     toggle_pw_view() {
       this.pw_view = !this.pw_view;

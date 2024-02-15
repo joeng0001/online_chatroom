@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "./router";
 const instance= axios.create({
   baseURL: "http://localhost:8089/",
   headers: {
@@ -10,13 +11,14 @@ const instance= axios.create({
 
 instance.interceptors.response.use(
   (response) => {
-    console.log("receive response",response)
     return response;
   },
   (e) => {
-    console.log("receive error",e)
-    alert(e.response.data.message)
-    return e
+    alert(e.response.data.message??e.response.data??'error')
+    if(e.response.status=="401"){
+      router.push("/")
+    }
+    return Promise.reject(e)
   }
 );
 export default instance

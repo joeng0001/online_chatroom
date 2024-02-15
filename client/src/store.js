@@ -14,17 +14,14 @@ const store = {
   socket: {},
   mutations: {
     setToken(state, token) {
-      state.token = token;
+      state.token = token??'';
       state.loginStatus = !!token;
-      localStorage.setItem("token", token);
     },
     setUserID(state, userID) {
       state.userID = userID;
-      localStorage.setItem("userID", userID);
     },
     setLoginStatus(state, status) {
       state.loginStatus = status;
-      localStorage.setItem("status", status);
     },
   },
   actions: {

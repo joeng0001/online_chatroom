@@ -1,5 +1,5 @@
 <template>
-  <v-btn color="primary" class="btn" @click="Open_dialog('New', null)">
+  <v-btn color="primary" class="btn mr-2" @click="Open_dialog('New', null)">
     Create New ChatRoom
   </v-btn>
   <v-btn color="secondary" class="btn" @click="Open_dialog_chat_record(-1)">

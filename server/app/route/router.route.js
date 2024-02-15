@@ -10,7 +10,7 @@ module.exports = app => {
   const jwt_config = require('../config/jwt.config.js')
   const jwt_verify = (req, res, next) => {
     if (!req.body.jwt||!jwt.verify(req.body.jwt, jwt_config.jwtSecret)) {
-      res.status(401).send({ message: "jwt verification failed" })
+      res.status(401).json({message:'authentication failures'});
       return
     } else {
       next()
@@ -20,7 +20,7 @@ module.exports = app => {
   router.put("/chat_record", jwt_verify, chat_record.get_chat_record);
   router.put("/chat_record_deletion", jwt_verify, chat_record.delete_chat_record);
   router.post("/chat_record", jwt_verify, chat_record.create_chat_record);
-  router.get("/user", user.findall_user);
+  router.post("/get_users", user.findall_user);
   router.post("/user", jwt_verify, user.delete_user);
   router.put("/user", jwt_verify, user.user_offline)
   router.put("/login", jwt_verify, login_service.add_online_account)

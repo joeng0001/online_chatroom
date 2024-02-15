@@ -112,7 +112,7 @@ export default {
       var data = {
         content: this.chat, publisherID: this.$store.state.userID,
         room_id: this.room_id,
-        chat_target: "anyone", description: "my first chat"
+        chat_target: "anyone", description: ""
       };
       DataService.add_chat_record(data)
         .then(res => {

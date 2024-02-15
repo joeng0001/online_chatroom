@@ -1,6 +1,11 @@
 <template>
     <v-container>
         <v-pagination v-model="page" :length="Math.ceil(room_list.length / 5)"></v-pagination>
+        <v-row align="center" class="text-h6 text-center text-decoration-underline">
+            <v-col >
+                Contact Admin for Chatroom Management
+            </v-col>
+        </v-row>
         <v-row v-for="room in curr_display_room_list" :key="room.id">
             <v-col>
                 <v-card v-if="room.active_status" :title="`${room.id}`" :subtitle="`${room.room_admin}`"
@@ -8,7 +13,6 @@
                     class="card"></v-card>
                 <v-divider />
             </v-col>
-
         </v-row>
     </v-container>
 </template>
