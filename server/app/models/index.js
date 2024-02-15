@@ -31,7 +31,7 @@ const connectDB=async ()=>{
       DBconnected=true
     })
     .catch(e=>{
-      console.log("waiting for db connect...",e)
+      console.log("waiting for db connect...")
     });
     await sleep(3000)
   }
