@@ -2,7 +2,7 @@ const user_control = require("../controllers/user.controller.js");
 const jwt_config = require('../config/jwt.config.js')
 module.exports = io => {
     io.on('connection', (socket) => {
-        console.log("some one connect")
+        console.log("socket connected")
         socket.on('message', (msg) => {
             io.emit('message', msg)
         });

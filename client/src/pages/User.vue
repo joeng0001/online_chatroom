@@ -120,7 +120,6 @@ export default {
       await DataService.findall_user()
         .then((res) => {
           this.users_list = res.data;
-          console.log(this.users_list.length)
           this.curr_display_users_list = this.users_list.slice(0, 5);
         })
         .catch((e) => {
