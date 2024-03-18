@@ -15,12 +15,12 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const {connectDB}= require("./app/models"); // init db
-connectDB().then(()=>{
-  require("./app/route/router.route.js")(app);
+const { connectDB } = require("./app/models"); // init db
+connectDB().then(() => {
+  const router = require("./app/route/router.route.js");
+  app.use("/", router);
   require("./app/route/socketio.route.js")(io);
-})
-
+});
 
 const path = require("path");
 const indexPath = path.join(__dirname, "../client/dist/index.html");

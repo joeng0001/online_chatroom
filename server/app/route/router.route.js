@@ -1,35 +1,19 @@
-const jwt = require('jsonwebtoken')
-
-
-module.exports = app => {
-  const chat_record = require("../controllers/chat_record.controller.js");
-  const user = require("../controllers/user.controller.js");
-  const chat_room = require("../controllers/chat_room.controller.js");
-  const login_service = require("../controllers/login.controller.js")
-  const register = require("../controllers/registration.controller.js")
-  const jwt_config = require('../config/jwt.config.js')
-  const jwt_verify = (req, res, next) => {
-    if (!req.body.jwt||!jwt.verify(req.body.jwt, jwt_config.jwtSecret)) {
-      res.status(401).json({message:'authentication failures'});
-      return
-    } else {
-      next()
-    }
+const jwt = require("jsonwebtoken");
+const jwt_config = require("../config/jwt.config.js");
+const jwt_verify = (req, res, next) => {
+  if (!req.body.jwt || !jwt.verify(req.body.jwt, jwt_config.jwtSecret)) {
+    res.status(401).json({ message: "authentication failures" });
+    return;
+  } else {
+    next();
   }
-  var router = require("express").Router();
-  router.put("/chat_record", jwt_verify, chat_record.get_chat_record);
-  router.put("/chat_record_deletion", jwt_verify, chat_record.delete_chat_record);
-  router.post("/chat_record", jwt_verify, chat_record.create_chat_record);
-  router.post("/get_users", user.findall_user);
-  router.post("/user", jwt_verify, user.delete_user);
-  router.put("/user", jwt_verify, user.user_offline)
-  router.put("/login", jwt_verify, login_service.add_online_account)
-  router.post("/user_edition", jwt_verify, user.edit_user);
-  router.post("/chat_room", jwt_verify, chat_room.get_room_list);
-  router.post("/login", login_service.login)
-  router.post("/register", register.create_user)
-  router.post("/chat_room_creation", jwt_verify, chat_room.create_chatroom)
-  router.post("/chat_room_edition", jwt_verify, chat_room.edit_chatroom)
-  router.put("/chat_room", jwt_verify, chat_room.remove_chatroom)
-  app.use('/', router);
 };
+
+var router = require("express").Router();
+
+require("./routes/chatRecord.js")(router, jwt_verify);
+require("./routes/chatRoom.js")(router, jwt_verify);
+require("./routes/loginService.js")(router, jwt_verify);
+require("./routes/register.js")(router, jwt_verify);
+require("./routes/user.js")(router, jwt_verify);
+module.exports = router;
